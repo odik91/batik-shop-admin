@@ -15,4 +15,9 @@ class ShopController extends Controller
     $title = 'Detail Produk';
     return view('public.product-detail', compact('title'));
   }
+
+  public function shoppingCart() {
+    $title = 'Keranjang Belanja';
+    return view('public.cart', compact('title'));
+  }
 }
