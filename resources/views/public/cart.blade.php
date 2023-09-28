@@ -5,7 +5,7 @@
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
       <h1 class="font-weight-semi-bold text-uppercase mb-3">Keranjang Belanja</h1>
       <div class="d-inline-flex">
-        <p class="m-0"><a href="{{ route('public.home') }}">Home</a></p>
+        <p class="m-0"><a href="{{ route('public.home') }}">Beranda</a></p>
         <p class="m-0 px-2">-</p>
         <p class="m-0">Keranjang Belanja</p>
       </div>
@@ -28,7 +28,7 @@
           </thead>
           <tbody class="align-middle">
             <tr>
-              <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Colorful Stylish
+              <td class="align-middle"><img src="{{asset('bootstrap-shop-template/img/product-1.jpg')}}" alt="" style="width: 50px;"> Colorful Stylish
                 Shirt</td>
               <td class="align-middle">Rp150</td>
               <td class="align-middle">
@@ -50,7 +50,7 @@
               <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
             </tr>
             <tr>
-              <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;"> Colorful Stylish
+              <td class="align-middle"><img src="{{asset('bootstrap-shop-template/img/product-2.jpg')}}" alt="" style="width: 50px;"> Colorful Stylish
                 Shirt</td>
               <td class="align-middle">Rp150</td>
               <td class="align-middle">
@@ -72,7 +72,7 @@
               <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
             </tr>
             <tr>
-              <td class="align-middle"><img src="img/product-3.jpg" alt="" style="width: 50px;"> Colorful Stylish
+              <td class="align-middle"><img src="{{asset('bootstrap-shop-template/img/product-3.jpg')}}" alt="" style="width: 50px;"> Colorful Stylish
                 Shirt</td>
               <td class="align-middle">Rp150</td>
               <td class="align-middle">
@@ -94,7 +94,7 @@
               <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
             </tr>
             <tr>
-              <td class="align-middle"><img src="img/product-4.jpg" alt="" style="width: 50px;"> Colorful Stylish
+              <td class="align-middle"><img src="{{asset('bootstrap-shop-template/img/product-4.jpg')}}" alt="" style="width: 50px;"> Colorful Stylish
                 Shirt</td>
               <td class="align-middle">Rp150</td>
               <td class="align-middle">
@@ -116,7 +116,7 @@
               <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
             </tr>
             <tr>
-              <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;"> Colorful
+              <td class="align-middle"><img src="{{asset('bootstrap-shop-template/img/product-5.jpg')}}" alt="" style="width: 50px;"> Colorful
                 Stylish
                 Shirt</td>
               <td class="align-middle">Rp150</td>
@@ -169,7 +169,8 @@
               <h5 class="font-weight-bold">Total</h5>
               <h5 class="font-weight-bold">Rp160</h5>
             </div>
-            <button class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke Pemesanan</button>
+            {{-- <button class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke Pemesanan</button> --}}
+            <a href="{{ route('public.checkout') }}" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke Pemesanan</a>
           </div>
         </div>
       </div>

@@ -20,4 +20,9 @@ class ShopController extends Controller
     $title = 'Keranjang Belanja';
     return view('public.cart', compact('title'));
   }
+
+  public function checkout() {
+    $title = 'Checkout';
+    return view('public.checkout', compact('title'));
+  }
 }

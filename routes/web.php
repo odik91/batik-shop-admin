@@ -29,6 +29,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('public.home');
 Route::get('/shop', [ShopController::class, 'index'])->name('public.shop');
 Route::get('/product-detail/{id}', [ShopController::class, 'productDetail'])->name('public.product-detail');
 Route::get('/keranjang-belanja', [ShopController::class, 'shoppingCart'])->name('public.keranjang-belanja');
+Route::get('/checkout', [ShopController::class, 'checkout'])->name('public.checkout');
 
 # route contact
 Route::get('/contact-us', [ContactController::class, 'index'])->name('public.contact-us');
