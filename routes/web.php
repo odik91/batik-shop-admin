@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
-Route::get('/home', function () {
-    return "<h1>Welcome home</h1>";
-});
+// route public pages
+# route public home page
+Route::get('/home', [HomeController::class, 'index'])->name('public.home');
+
+# route shop
+Route::get('/shop', [ShopController::class, 'index'])->name('public.shop');
