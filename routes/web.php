@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	// return view('welcome');
+	return redirect()->route('public.home');
 });
 
 // route public pages
@@ -26,6 +27,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('public.home');
 
 # route shop
 Route::get('/shop', [ShopController::class, 'index'])->name('public.shop');
+Route::get('/product-detail/{id}', [ShopController::class, 'productDetail'])->name('public.product-detail');
 
 # route contact
 Route::get('/contact-us', [ContactController::class, 'index'])->name('public.contact-us');
