@@ -10,4 +10,9 @@ class ShopController extends Controller
     $title = 'Toko';
     return view('public.shop', compact('title'));
   }
+
+  public function productDetail($id) {
+    $title = 'Detail Produk';
+    return view('public.product-detail', compact('title'));
+  }
 }

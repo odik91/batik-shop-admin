@@ -1,7 +1,10 @@
 <div class="navbar-nav mr-auto py-0">
-  <a href="{{ route('public.home') }}" class="nav-item nav-link {{ strtolower($title) == 'home' ? 'active' : '' }}">Beranda</a>
-  <a href="{{ route('public.shop') }}" class="nav-item nav-link {{ strtolower($title) == 'toko' ? 'active' : '' }}">Toko</a>
-  <a href="#" class="nav-item nav-link">Kontak Kami</a>
+  <a href="{{ route('public.home') }}"
+    class="nav-item nav-link {{ strtolower($title) == 'home' ? 'active' : '' }}">Beranda</a>
+  <a href="{{ route('public.shop') }}"
+    class="nav-item nav-link {{ strtolower($title) == 'toko' ? 'active' : '' }}">Toko</a>
+  <a href="{{ route('public.contact-us') }}"
+    class="nav-item nav-link {{ strtolower($title) == 'kontak kami' ? 'active' : '' }}">Kontak Kami</a>
 </div>
 <div class="navbar-nav ml-auto py-0">
   @if (Route::has('login'))

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('public.home');
 
 # route shop
 Route::get('/shop', [ShopController::class, 'index'])->name('public.shop');
+
+# route contact
+Route::get('/contact-us', [ContactController::class, 'index'])->name('public.contact-us');
