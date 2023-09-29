@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PublicUserController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,10 @@ Route::get('/shop', [ShopController::class, 'index'])->name('public.shop');
 Route::get('/product-detail/{id}', [ShopController::class, 'productDetail'])->name('public.product-detail');
 Route::get('/keranjang-belanja', [ShopController::class, 'shoppingCart'])->name('public.keranjang-belanja');
 Route::get('/checkout', [ShopController::class, 'checkout'])->name('public.checkout');
+Route::get('/wishlists', [ShopController::class, 'wishlists'])->name('public.wishlists');
 
 # route contact
 Route::get('/contact-us', [ContactController::class, 'index'])->name('public.contact-us');
+
+# route profile
+Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');

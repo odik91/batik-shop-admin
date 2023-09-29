@@ -9,7 +9,7 @@
 <div class="navbar-nav ml-auto py-0">
   @if (Route::has('login'))
     @auth
-      <a href="#" class="nav-item nav-link">Profil</a>
+      <a href="{{ route('public.profile') }}" class="nav-item nav-link">Profil</a>
       <a href="{{ route('logout') }}" class="nav-item nav-link"
         onclick="event.preventDefault();
       document.getElementById('logout-form').submit();">Keluar</a>
