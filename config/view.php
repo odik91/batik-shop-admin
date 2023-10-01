@@ -15,6 +15,7 @@ return [
 
     'paths' => [
         resource_path('views'),
+        resource_path('views/admin'),
     ],
 
     /*
@@ -32,5 +33,9 @@ return [
         'VIEW_COMPILED_PATH',
         realpath(storage_path('framework/views'))
     ),
+
+    'namespaces' => [
+        'admin' => resource_path('views/admin'),
+    ],    
 
 ];

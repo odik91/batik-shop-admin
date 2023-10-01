@@ -40,9 +40,12 @@ Route::get('/contact-us', [ContactController::class, 'index'])->name('public.con
 Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');
 
 # route admin
-Route::get('/admin/login', function () {
-	return view('admin.auth.login');
-});
-Route::get('/admin/home', function () {
-	return view('admin.pages.home');
-});
+// Route::get('/admin/login', function () {
+// 	return view('admin.auth.login');
+// });
+// Route::get('/admin/home', function () {
+// 	return view('admin.pages.home');
+// });
+
+# include admin route
+require __DIR__ . '/admin.php';

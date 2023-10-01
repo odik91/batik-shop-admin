@@ -45,7 +45,7 @@
               </a>
               <h2 class="mb-2 text-center">Masuk</h2>
               <p class="text-center">Masuk untuk melajutkan</p>
-              <form method="POST" action="{{ route('login') }}">
+              <form method="POST" action="{{ route('admin.login') }}">
                 @csrf
                 <div class="row">
                   <div class="col-lg-12">
