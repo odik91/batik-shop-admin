@@ -38,3 +38,11 @@ Route::get('/contact-us', [ContactController::class, 'index'])->name('public.con
 
 # route profile
 Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');
+
+# route admin
+Route::get('/admin/login', function () {
+	return view('admin.auth.login');
+});
+Route::get('/admin/home', function () {
+	return view('admin.pages.home');
+});
