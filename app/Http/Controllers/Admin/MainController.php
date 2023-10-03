@@ -11,7 +11,6 @@ class MainController extends Controller
 	{
 		$title = 'Dashboard';
 		$username = auth()->guard('admin')->name;
-		// dd(auth()->guard('admin')->name);
 		return view('admin.pages.home', compact('title', 'username'));
 	}
 }

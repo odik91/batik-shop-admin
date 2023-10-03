@@ -5,7 +5,7 @@
         <div class="flex-wrap d-flex justify-content-between align-items-center">
           <div>
             <h1>{{ isset($title) ? $title : 'Dashboard' }}</h1>
-            <p>We are on a mission to help developers like you build successful projects for FREE.</p>
+            <p>Admin page</p>
           </div>
           {{-- <div>
             <a href="" class="btn btn-link btn-soft-light">

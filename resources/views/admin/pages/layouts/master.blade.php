@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="_token" content="{{ csrf_token() }}">
   <title>Admin Batikmu | {{ isset($title) ? $title : 'Dashboard' }}</title>
 
   <!-- Favicon -->
@@ -30,6 +31,13 @@
   <!-- RTL Css -->
   <link rel="stylesheet" href="{{ asset('template/assets/css/rtl.min.css') }}" />
 
+  {{-- sweet alert --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.min.css">
+
+  {{-- main css --}}
+  <link rel="stylesheet" href="{{ asset('styles/loading.css') }}">
+  <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
+
   @stack('css')
 
 </head>
@@ -38,6 +46,13 @@
   <!-- loader Start -->
   @include('admin.pages.layouts.default-loader')
   <!-- loader END -->
+
+  {{-- loading animation --}}
+  <div class="spinner-box loading-rtf d-none" id="loading-rtf">
+    <div class="three-quarter-spinner"></div>
+  </div>
+
+  {{-- loading animation --}}
 
   {{-- sidebar --}}
   @include('admin.pages.layouts.sidebar')
@@ -52,7 +67,7 @@
       <!-- Nav Header Component End -->
       <!--Nav End-->
     </div>
-    
+
     {{-- content --}}
     @yield('content')
     {{-- end content --}}
@@ -88,16 +103,14 @@
           <h5 class="mb-3">Scheme</h5>
           <div class="d-grid gap-3 grid-cols-3 mb-4">
             <div class="btn btn-border" data-setting="color-mode" data-name="color" data-value="auto">
-              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill="currentColor" d="M7,2V13H10V22L17,10H13L17,2H7Z" />
               </svg>
               <span class="ms-2 "> Auto </span>
             </div>
 
             <div class="btn btn-border" data-setting="color-mode" data-name="color" data-value="dark">
-              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill="currentColor"
                   d="M9,2C7.95,2 6.95,2.16 6,2.46C10.06,3.73 13,7.5 13,12C13,16.5 10.06,20.27 6,21.54C6.95,21.84 7.95,22 9,22A10,10 0 0,0 19,12A10,10 0 0,0 9,2Z" />
               </svg>
@@ -370,6 +383,12 @@
 
   <!-- App Script -->
   <script src="{{ asset('template/assets/js/hope-ui.js') }}" defer></script>
+
+  {{-- sweet alert --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
+  
+  {{-- main js --}}
+  <script src="{{ asset('scripts/main.js') }}"></script>
 
   @stack('js')
 
