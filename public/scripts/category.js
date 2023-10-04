@@ -66,6 +66,79 @@ const reloadTableCategory = () => {
   tableCategory.ajax.reload();
 };
 
+// edit category
+const newCategory = document.getElementById("add-new-category");
+newCategory.addEventListener("click", () => {
+  resetFormElement("form-add-category", "is-valid", "button-add-category");
+});
+
+stdValidationElement(
+  "category-add",
+  "form-add-category",
+  "is-valid",
+  [],
+  "button-add-category",
+  1
+);
+
+// form input category
+const formAddCategory = document.getElementById("form-add-category");
+formAddCategory.addEventListener("submit", (e) => {
+  e.preventDefault();
+  showLoadingAnimation();
+
+  const formData = new FormData(formAddCategory);
+  const data = {
+    _token: formData.get("_token"),
+    category: formData.get("category-add"),
+  };
+
+  const url = `ajax-add-category`;
+
+  $.ajax({
+    url,
+    type: "POST",
+    data,
+    success: (data) => {
+      hideLoadingAnimation();
+      reloadTableCategory();
+      resetFormElement("form-add-category", "is-valid", "button-add-category");
+      $("#modalAddCategory").modal("hide");
+
+      Swal.fire({
+        title: "Berhasil",
+        html: data.message,
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Mengerti",
+        allowOutsideClick: false,
+      });
+    },
+    error: (data) => {
+      hideLoadingAnimation();
+      Swal.fire({
+        title: "Gagal",
+        html: data.responseJSON.message,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Mengerti",
+        allowOutsideClick: false,
+        didOpen: () => {
+          document.getElementById("closeModalAddCategory").disabled = true;
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById("closeModalAddCategory").disabled = false;
+        }
+      });
+    },
+  });
+});
+
 document
   .getElementById("button-edit-category")
   .addEventListener("click", () => {

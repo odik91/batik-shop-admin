@@ -29,7 +29,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     # route kategori
     Route::get('/category', [CategoryController::class, 'index'])->name('category');
     Route::get('/datatable-category', [CategoryController::class, 'dataTableCategory'])->name('datatable-category');
-    Route::get('/ajax-add-category', [CategoryController::class, 'ajaxAddCategory'])->name('ajax-add-category');
+    Route::post('/ajax-add-category', [CategoryController::class, 'ajaxAddCategory'])->name('ajax-add-category');
     Route::match(['PUT', 'PATCH'], '/ajax-update-category', [CategoryController::class, 'ajaxUpdateCategory'])->name('ajax-update-category');
     Route::delete('/ajax-delete-category', [CategoryController::class, 'ajaxDeleteCategory'])->name('ajax-delete-category');
   });

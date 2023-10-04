@@ -11,7 +11,7 @@
           </div>
           <div class="card-body">
             <div class="d-flex justify-content-start mb-2">
-              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill">Tambah Kategori</button>
+              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill" id="add-new-category" data-bs-toggle="modal" data-bs-target="#modalAddCategory">Tambah Kategori</button>
               <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill mx-1" onclick="reloadTableCategory()">Refresh Table</button>
             </div>
             <div class="table-responsive">
