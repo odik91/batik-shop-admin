@@ -53,7 +53,7 @@ class CategoryController extends Controller
 				], 422);
 			}
 		}
-	}
+	}  
 
 	public function ajaxUpdateCategory(Request $request)
 	{
@@ -64,7 +64,7 @@ class CategoryController extends Controller
 		if (request()->ajax()) {
 			$category = Category::find($request['id']);
 			$name = $category->category;
-			$category->delete();
+			$category->forceDelete();
 			return response()->json([
 				'message' => 'Kategori ' . $name . ' berhasil dihapus',
 			], 200);
