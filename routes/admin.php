@@ -40,5 +40,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/subcategory-ajax-get-categories', [SubcategoryController::class, 'ajaxGetCategory'])->name('ajax-get-categories');
     Route::post('/subcategory-ajax-store-subcategories', [SubcategoryController::class, 'ajaxStoreSubcategory'])->name('ajax-store-subcategories');
     Route::match(['PUT', 'PATCH'], '/subcategory-ajax-update-subcategories', [SubcategoryController::class, 'ajaxUpdateSubcategory'])->name('ajax-update-subcategories');
+    Route::delete('/subcategory-ajax-delete', [SubcategoryController::class, 'ajaxDeleteSubcategory'])->name('subcategory-ajax-delete');
   });
 });

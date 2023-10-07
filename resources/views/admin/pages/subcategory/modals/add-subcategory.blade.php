@@ -10,7 +10,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalAddSubcategory"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" name="id-category" id="id-category">
           <div class="row">
             <label for="category" class="col-sm-4 col-form-label">Kategori</label>
             <div class="col-sm-8">
@@ -22,7 +21,7 @@
           <div class="row">
             <label for="subcategory" class="col-sm-4 col-form-label">Subkategori</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control text-capitalize" id="subcategory"  name="subcategory" placeholder="Subkategori" required>
+              <input type="text" class="form-control text-capitalize" id="subcategory"  name="subcategory" placeholder="Subkategori" autocomplete="off" required>
             </div>
           </div>
         </div>

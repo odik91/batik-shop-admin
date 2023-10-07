@@ -14,7 +14,7 @@
               <button type="button" class="btn btn-sm btn-outline-primary rounded-pill" id="add-new-subcategory"
                 data-bs-toggle="modal" data-bs-target="#modalAddSubcategory">Tambah Subkategori</button>
               <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill mx-1"
-                onclick="">Refresh Table</button>
+                onclick="reloadTableSubcategory()">Refresh Table</button>
             </div>
             <div class="table-responsive">
               <table id="table-subcategory" class="table table-striped w-100" data-toggle="data-table">
@@ -28,17 +28,17 @@
                 <tbody></tbody>
               </table>
 
-              {{-- modal add category --}}
+              {{-- modal add subcategory --}}
               @include('admin.pages.subcategory.modals.add-subcategory')
               {{-- end modal add category --}}
 
-              {{-- modal edit category --}}
-              {{-- @include('admin.pages.category.modals.edit-category') --}}
-              {{-- end modal edit category --}}
+              {{-- modal edit subcategory --}}
+              @include('admin.pages.subcategory.modals.edit-subcategory')
+              {{-- end modal edit subcategory --}}
 
-              {{-- modal edit category --}}
-              {{-- @include('admin.pages.category.modals.detail-category') --}}
-              {{-- end modal edit category --}}
+              {{-- modal dettail subcategory --}}
+              @include('admin.pages.subcategory.modals.detail-subcategory')
+              {{-- end modal dettail subcategory --}}
             </div>
           </div>
         </div>

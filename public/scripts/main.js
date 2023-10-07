@@ -46,7 +46,6 @@ const statusNone = (element) => {
   statusElement.classList.remove("is-invalid");
 };
 
-
 /**
  *
  * @param {*} formId
@@ -213,5 +212,59 @@ const resetFormElement = (formElement, className, button) => {
   });
   const buttonElement = document.getElementById(button);
   buttonElement.disabled = true;
+};
+
+const encryptCaesarCipher = (text, offset) => {
+  let encryptedText = "";
+
+  for (let i = 0; i < text.length; i++) {
+    let char = text.charAt(i);
+    if (char.match(/[a-zA-Z]/)) {
+      let isLowerCase = char === char.toLowerCase();
+      let charCode = char.charCodeAt(0);
+      let base = isLowerCase ? 97 : 65;
+      let encryptedCharCode = ((charCode - base + offset) % 26) + base;
+      encryptedText += String.fromCharCode(encryptedCharCode);
+    } else if (char.match(/[0-9]/)) {
+      let digit = parseInt(char);
+      let encryptedDigit = (digit + offset) % 10;
+      encryptedText += encryptedDigit.toString();
+    } else {
+      encryptedText += char; // Tidak mengubah karakter selain huruf dan angka
+    }
+  }
+
+  return encryptedText;
+};
+
+// crypto-js
+
+// Fungsi untuk mengenkripsi teks
+const encryptText = (text, secretKey) => {
+  const encrypted = CryptoJS.AES.encrypt(text, secretKey);
+  return encrypted.toString();
+};
+
+// Fungsi untuk mendekripsi teks
+const decryptText = (encryptedText, secretKey) => {
+  const decrypted = CryptoJS.AES.decrypt(encryptedText, secretKey);
+  return decrypted.toString(CryptoJS.enc.Utf8);
+};
+
+const generateRandomKey = () => {
+  const array = new Uint8Array(16); // Gunakan panjang yang sesuai dengan kebutuhan Anda (misalnya, 16 byte untuk key AES-128)
+  crypto.getRandomValues(array);
+  return Array.from(array, (byte) =>
+    ("0" + (byte & 0xff).toString(16)).slice(-2)
+  ).join("");
+};
+
+// fungsi hapus targeted local storage class based
+const removeTargetLocalStorage = (elementClass, targetStorage) => {
+  document.querySelectorAll("." + elementClass).forEach((element) => {
+    element.addEventListener("click", () => {
+      localStorage.removeItem(targetStorage);
+    });
+  });
 };
 
