@@ -35,7 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/ajax-delete-category', [CategoryController::class, 'ajaxDeleteCategory'])->name('ajax-delete-category');
 
     # route subcategory
-    Route::get('/subcategory', [SubcategoryController::class, 'index'])->name('subcategory-index');
+    Route::get('/subcategory', [SubcategoryController::class, 'index'])->name('subcategory');
     Route::get('/subcategory-datatable', [SubcategoryController::class, 'dataTableSubcategory'])->name('subacategory-datatable');
     Route::get('/subcategory-ajax-get-categories', [SubcategoryController::class, 'ajaxGetCategory'])->name('ajax-get-categories');
     Route::post('/subcategory-ajax-store-subcategories', [SubcategoryController::class, 'ajaxStoreSubcategory'])->name('ajax-store-subcategories');

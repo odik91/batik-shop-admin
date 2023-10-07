@@ -14,7 +14,8 @@ class CategoryController extends Controller
 	public function index()
 	{
 		$title = 'Kategori';
-		return view('admin.pages.category.index', compact('title'));
+		$parent = 'pengaturan';
+		return view('admin.pages.category.index', compact('title', 'parent'));
 	}
 
 	public function dataTableCategory()

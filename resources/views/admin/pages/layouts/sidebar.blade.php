@@ -57,7 +57,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="../dashboard/index.html">
+          <a class="nav-link {{ strtolower($title) == 'dashboard' ? 'active' : '' }}" aria-current="page"
+            href="{{ route('admin.home') }}">
             <i class="icon">
               <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="icon-20">
@@ -85,8 +86,9 @@
 
         {{-- pengaturan --}}
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-pengaturan" role="button"
-            aria-expanded="false" aria-controls="sidebar-pengaturan">
+          <a class="nav-link {{ isset($parent) && $parent === 'pengaturan' ? '' : 'collapse' }}" data-bs-toggle="collapse" href="#sidebar-pengaturan" role="button"
+            aria-expanded="{{ isset($parent) && $parent === 'pengaturan' ? 'true' : 'false' }}"
+            aria-controls="sidebar-pengaturan">
             <i class="icon">
               <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -106,9 +108,9 @@
               </svg>
             </i>
           </a>
-          <ul class="sub-nav collapse" id="sidebar-pengaturan" data-bs-parent="#sidebar-menu">
+          <ul class="sub-nav collapse {{ isset($parent) && $parent === 'pengaturan' ? 'show' : '' }}" id="sidebar-pengaturan" data-bs-parent="#sidebar-menu">
             <li class="nav-item">
-              <a class="nav-link " href="{{ route('admin.category') }}">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.category' ? 'active' : '' }}" href="{{ route('admin.category') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">
@@ -122,7 +124,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="{{ route('admin.subcategory-index') }}">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.subcategory' ? 'active' : '' }}" href="{{ route('admin.subcategory') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">
