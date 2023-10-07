@@ -14,7 +14,7 @@ class SubcategoryController extends Controller
 {
   public function index()
   {
-    $title = 'Subkategory';
+    $title = 'Subkategori';
     return view('admin.pages.subcategory.index', compact('title'));
   }
 

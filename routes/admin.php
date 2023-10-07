@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use Illuminate\Support\Facades\Route;
@@ -41,5 +42,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/subcategory-ajax-store-subcategories', [SubcategoryController::class, 'ajaxStoreSubcategory'])->name('ajax-store-subcategories');
     Route::match(['PUT', 'PATCH'], '/subcategory-ajax-update-subcategories', [SubcategoryController::class, 'ajaxUpdateSubcategory'])->name('ajax-update-subcategories');
     Route::delete('/subcategory-ajax-delete', [SubcategoryController::class, 'ajaxDeleteSubcategory'])->name('subcategory-ajax-delete');
+
+    # route color
+    Route::get('/color', [ColorController::class, 'index'])->name('color');
   });
 });
