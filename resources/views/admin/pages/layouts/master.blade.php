@@ -31,12 +31,96 @@
   <!-- RTL Css -->
   <link rel="stylesheet" href="{{ asset('template/assets/css/rtl.min.css') }}" />
 
+  {{-- select2 --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+
   {{-- sweet alert --}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.min.css">
 
   {{-- main css --}}
   <link rel="stylesheet" href="{{ asset('styles/loading.css') }}">
   <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
+
+
+  <style>
+    :root {
+      scrollbar-width: thin;
+      scrollbar-color: var(--bs-primary) #fff;
+    }
+
+    .select2 {
+      border: 1px solid #eee;
+    }
+
+    .select2-container {
+      width: 100% !important;
+      border-radius: 0.25rem;
+      height: 38.4px;
+    }
+
+    .select2-container--focus {
+      border: 1px solid var(--bs-primary);
+    }
+
+    .select2-selection {
+      margin-top: 0px !important;
+      padding-top: 0px !important;
+    }
+
+    .select2-dropdown {
+      border: 1px solid #eee;
+      max-height: 200px;
+      overflow-y: scroll;
+    }
+
+    .select2-search__field {
+      border: 1px solid #eee;
+    }
+
+    .select2-results__option {
+      padding: 8px 16px;
+    }
+
+    .select2-results__option:hover {
+      background: rgba(101, 101, 101, 0.075);
+      color: var(--bs-indigo-shade-80)
+    }
+
+    .select2-selection__rendered {
+      /* font-size: 0.8125rem; */
+      margin: 0;
+      padding: 6px 16px !important;
+    }
+
+    .select2-results__options {
+      scrollbar-width: thin;
+    }
+
+    .select2-selection--single {
+      margin-top: 0px !important;
+      border-radius: 0.25rem;
+      height: 36px !important;
+    }
+
+    .is-invalid .select2-container--default .select2-selection--single {
+      border-color: #dc3545;
+    }
+
+    .is-valid .select2-container--default .select2-selection--single {
+      border-color: #198754;
+    }
+
+    .is-valid+.select2-container .select2-selection {
+      border-color: #28a745 !important;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+    }
+
+    .is-invalid+.select2-container .select2-selection {
+      border-color: #dc3545 !important;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+    }
+  </style>
+
 
   @stack('css')
 
@@ -110,7 +194,8 @@
             </div>
 
             <div class="btn btn-border" data-setting="color-mode" data-name="color" data-value="dark">
-              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path fill="currentColor"
                   d="M9,2C7.95,2 6.95,2.16 6,2.46C10.06,3.73 13,7.5 13,12C13,16.5 10.06,20.27 6,21.54C6.95,21.84 7.95,22 9,22A10,10 0 0,0 19,12A10,10 0 0,0 9,2Z" />
               </svg>
@@ -384,9 +469,12 @@
   <!-- App Script -->
   <script src="{{ asset('template/assets/js/hope-ui.js') }}" defer></script>
 
+  {{-- select2 --}}
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   {{-- sweet alert --}}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
-  
+
   {{-- main js --}}
   <script src="{{ asset('scripts/main.js') }}"></script>
 

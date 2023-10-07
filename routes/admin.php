@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\RoutePath;
@@ -32,5 +33,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/ajax-add-category', [CategoryController::class, 'ajaxAddCategory'])->name('ajax-add-category');
     Route::match(['PUT', 'PATCH'], '/ajax-update-category', [CategoryController::class, 'ajaxUpdateCategory'])->name('ajax-update-category');
     Route::delete('/ajax-delete-category', [CategoryController::class, 'ajaxDeleteCategory'])->name('ajax-delete-category');
+
+    # route subcategory
+    Route::get('/subcategory', [SubcategoryController::class, 'index'])->name('subcategory-index');
+    Route::get('/subcategory-datatable', [SubcategoryController::class, 'dataTableSubcategory'])->name('subacategory-datatable');
+    Route::get('/subcategory-ajax-get-categories', [SubcategoryController::class, 'ajaxGetCategory'])->name('ajax-get-categories');
+    Route::post('/subcategory-ajax-store-subcategories', [SubcategoryController::class, 'ajaxStoreSubcategory'])->name('ajax-store-subcategories');
+    Route::match(['PUT', 'PATCH'], '/subcategory-ajax-update-subcategories', [SubcategoryController::class, 'ajaxUpdateSubcategory'])->name('ajax-update-subcategories');
   });
 });

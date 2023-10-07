@@ -4,7 +4,7 @@ const viewData = (psudoElement) => {
 
   listUsers.forEach((item) => {
     item.addEventListener("click", (e) => {
-      document.cookie = `id_cat=; category=;}`;
+      document.cookie = `id_cat=; category=;`;
       try {
         showLoadingAnimation();
 
@@ -145,17 +145,76 @@ document
     const cookieData = document.cookie;
     const data = cookieToJson(cookieData);
 
-    const id_category = document.getElementById("id-category");
+    const id_category = document.getElementById("id-category-edit");
     const category = document.getElementById("category-edit");
 
     id_category.value = data.id_cat;
     category.value = data.category;
+    category.classList.add("is-valid");
   });
+
+stdValidationElement(
+  "category-edit",
+  "form-edit-category",
+  "is-valid",
+  [],
+  "submit-edit-category",
+  1
+);
 
 const formEditCategory = document.getElementById("form-edit-category");
 formEditCategory.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log("submit event");
+  showLoadingAnimation();
+  const url = `ajax-update-category`;
+  const formData = new FormData(formEditCategory);
+  const data = {
+    _token: formData.get("_token"),
+    _method: formData.get("_method"),
+    id: formData.get("id-category-edit"),
+    category: formData.get("category-edit"),
+  };
+
+  $.ajax({
+    url,
+    type: "POST",
+    data,
+    success: (data) => {
+      hideLoadingAnimation();
+      reloadTableCategory();
+      $("#modalEditCategory").modal("hide");
+      Swal.fire({
+        title: "Berhasil",
+        html: data.message,
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Mengerti",
+        allowOutsideClick: false,
+      });
+    },
+    error: (data) => {
+      hideLoadingAnimation();
+      Swal.fire({
+        title: "Gagal",
+        html: data.responseJSON.message,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Mengerti",
+        allowOutsideClick: false,
+        didOpen: () => {
+          document.getElementById("closeModalEditCategory").disabled = true;
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById("closeModalEditCategory").disabled = false;
+        }
+      });
+    },
+  });
 });
 
 const buttonDeleteCategory = document.getElementById("button-delete-category");

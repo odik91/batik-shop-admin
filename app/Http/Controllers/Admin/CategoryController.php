@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -41,7 +41,10 @@ class CategoryController extends Controller
 			);
 
 			try {
-				$category = new Category(['category' => $request['category']]);
+				$category = new Category([
+					'category' => $request['category'],
+					'slug' => Str::slug($request['category']),
+				]);
 				$category->save();
 
 				return response()->json([
@@ -53,16 +56,51 @@ class CategoryController extends Controller
 				], 422);
 			}
 		}
-	}  
+	}
 
 	public function ajaxUpdateCategory(Request $request)
 	{
+		if (request()->ajax()) {
+			$this->validate(
+				$request,
+				[
+					'category' => 'required|string|unique:categories,category,' . $request['id']
+				],
+				[
+					'category.unique' => 'Kategori telah digunakan'
+				]
+			);
+
+			try {
+				$category = Category::find($request['id']);
+				$category->category = $request['category'];
+				$category->slug = Str::slug($request['category']);
+				$category->save();
+
+				return response()->json([
+					'message' => 'Kategori ' . $request['category'] . ' berhasil diubah'
+				], 200);
+			} catch (Exception $e) {
+				return response()->json([
+					'message' => 'Kategori gagal di ubah',
+					'error_log' => $e
+				], 422);
+			}
+		}
 	}
 
 	public function ajaxDeleteCategory(Request $request)
 	{
 		if (request()->ajax()) {
 			$category = Category::find($request['id']);
+			$subcategories = $category->getSubCategories;
+
+			if (sizeof($subcategories) > 0) {
+				return response()->json([
+					'message' => ucwords($category['category']) . ' tidak dapat dihapus.<br> Category sedang digunakan pada subkategori'
+				], 422);
+			}
+
 			$name = $category->category;
 			$category->forceDelete();
 			return response()->json([
