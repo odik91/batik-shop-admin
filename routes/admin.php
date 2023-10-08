@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\UnitController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\RoutePath;
@@ -53,5 +54,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/size-datatable', [SizeController::class, 'sizeDataTable'])->name('size-datatable');
     Route::match(['PUT', 'PATCH'], '/size-update', [SizeController::class, 'ajaxUpdateSize'])->name('size-update');
     Route::delete('/size-delete', [SizeController::class, 'ajaxDeleteSize'])->name('size-delete');
+
+    # route units
+    Route::get('/unit', [UnitController::class, 'index'])->name('unit');
+    Route::get('/unit-datatable', [UnitController::class, 'dataTableUnit'])->name('unit-datatable');
   });
 });
