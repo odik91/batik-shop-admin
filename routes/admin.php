@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\ProvinceContrller;
@@ -66,5 +67,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/province-add', [ProvinceContrller::class, 'ajaxAddProvince'])->name('province-add');
     Route::match(['PUT', 'PATCH'], '/province-update', [ProvinceContrller::class, 'ajaxUpdateProvince'])->name('province-update');
     Route::delete('/province-delete', [ProvinceContrller::class, 'ajaxDeleteProvince'])->name('province-delete');
+
+    # route city
+    Route::get('/city', [CityController::class, 'index'])->name('city');
+    Route::get('/city-datatable', [CityController::class, 'dataTableCity'])->name('city-datatable');
+    Route::post('/city-add', [CityController::class, 'ajaxAddCity'])->name('city-add');
+    Route::match(['PUT', 'PATCH'], '/city-update', [CityController::class, 'ajaxUpdateCity'])->name('city-update');
+    Route::delete('/city-delete', [CityController::class, 'ajaxDeleteCity'])->name('city-delete');
   });
 });
