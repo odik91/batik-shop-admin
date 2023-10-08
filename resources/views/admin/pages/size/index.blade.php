@@ -12,7 +12,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-start mb-2">
               <button type="button" class="btn btn-sm btn-outline-primary rounded-pill text-capitalize" id="add-new-size"
-                data-bs-toggle="modal" data-bs-target="#modalAddSize">Tambah warna</button>
+                data-bs-toggle="modal" data-bs-target="#modalAddSize">tambah ukuran</button>
               <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill mx-1"
                 onclick="reloadTableSize()">Refresh Table</button>
             </div>
@@ -22,7 +22,6 @@
                   <tr>
                     <th>#</th>
                     <th>Ukuran</th>
-                    <th>Singkatan</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
