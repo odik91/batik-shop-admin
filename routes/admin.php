@@ -45,5 +45,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     # route color
     Route::get('/color', [ColorController::class, 'index'])->name('color');
+    Route::get('/color-datatable', [ColorController::class, 'dataTableColor'])->name('color-datatable');
   });
 });

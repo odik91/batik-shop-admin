@@ -11,7 +11,6 @@
             id="closeModalAddColor"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" name="color" id="color">
           <div class="row">
             <label for="color" class="col-sm-4 col-form-label">Warna</label>
             <div class="col-sm-8">

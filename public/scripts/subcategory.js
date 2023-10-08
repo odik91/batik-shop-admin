@@ -65,7 +65,7 @@ $(() => {
       },
       {
         data: null,
-        name: null,
+        name: 'subcategory',
         render: (data, type, row) => {
           return `${data.subcategory}`;
         },

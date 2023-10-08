@@ -48,7 +48,7 @@ $(() => {
       },
       {
         data: null,
-        name: null,
+        name: 'category',
         render: (data, type, row) => {
           return `${data.category} <input type="hidden" value="${data.id}">`;
         },
