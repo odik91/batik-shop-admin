@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\ProvinceContrller;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UnitController;
@@ -58,5 +59,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     # route units
     Route::get('/unit', [UnitController::class, 'index'])->name('unit');
     Route::get('/unit-datatable', [UnitController::class, 'dataTableUnit'])->name('unit-datatable');
+
+    # route province
+    Route::get('/province', [ProvinceContrller::class, 'index'])->name('province');
+    Route::get('/province-datatable', [ProvinceContrller::class, 'dataTable'])->name('province-datatable');
+    Route::post('/province-add', [ProvinceContrller::class, 'ajaxAddProvince'])->name('province-add');
+    Route::match(['PUT', 'PATCH'], '/province-update', [ProvinceContrller::class, 'ajaxUpdateProvince'])->name('province-update');
+    Route::delete('/province-delete', [ProvinceContrller::class, 'ajaxDeleteProvince'])->name('province-delete');
   });
 });
