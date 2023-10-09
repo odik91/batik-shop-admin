@@ -18,78 +18,24 @@
     <div class="row px-xl-5">
       <!-- Shop Sidebar Start -->
       <div class="col-lg-3 col-md-12">
-        <!-- Price Start -->
-        <div class="border-bottom mb-4 pb-4">
-          <h5 class="font-weight-semi-bold mb-4 capitalize">filter berdasarkan harga</h5>
-          <form>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" checked id="price-all" />
-              <label class="custom-control-label capitalize" for="price-all">semua harga</label>
-              <span class="badge border font-weight-normal">1000</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="price-1" />
-              <label class="custom-control-label" for="price-1">$0 - $100</label>
-              <span class="badge border font-weight-normal">150</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="price-2" />
-              <label class="custom-control-label" for="price-2">$100 - $200</label>
-              <span class="badge border font-weight-normal">295</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="price-3" />
-              <label class="custom-control-label" for="price-3">$200 - $300</label>
-              <span class="badge border font-weight-normal">246</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="price-4" />
-              <label class="custom-control-label" for="price-4">$300 - $400</label>
-              <span class="badge border font-weight-normal">145</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-              <input type="checkbox" class="custom-control-input" id="price-5" />
-              <label class="custom-control-label" for="price-5">$400 - $500</label>
-              <span class="badge border font-weight-normal">168</span>
-            </div>
-          </form>
-        </div>
-        <!-- Price End -->
-
         <!-- Color Start -->
         <div class="border-bottom mb-4 pb-4">
           <h5 class="font-weight-semi-bold mb-4 capitalize">filter berdasarkan warna</h5>
-          <form>
+          <form method="GET" action="#" id="filter-warna">
+            @csrf
             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" checked id="color-all" />
-              <label class="custom-control-label capitalize" for="price-all">semua warna</label>
-              <span class="badge border font-weight-normal">1000</span>
+              <input type="checkbox" class="custom-control-input" checked id="color-all" name="color-all" />
+              <label class="custom-control-label capitalize" for="color-all">semua warna</label>
+              {{-- <span class="badge border font-weight-normal">1000</span> --}}
             </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="color-1" />
-              <label class="custom-control-label" for="color-1">Black</label>
-              <span class="badge border font-weight-normal">150</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="color-2" />
-              <label class="custom-control-label" for="color-2">White</label>
-              <span class="badge border font-weight-normal">295</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="color-3" />
-              <label class="custom-control-label" for="color-3">Red</label>
-              <span class="badge border font-weight-normal">246</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="color-4" />
-              <label class="custom-control-label" for="color-4">Blue</label>
-              <span class="badge border font-weight-normal">145</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-              <input type="checkbox" class="custom-control-input" id="color-5" />
-              <label class="custom-control-label" for="color-5">Green</label>
-              <span class="badge border font-weight-normal">168</span>
-            </div>
+
+            @foreach (App\Models\Color::orderBy('color', 'asc')->get() as $color)
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input type="checkbox" class="custom-control-input" id="color-{{ $color['id'] }}" name="color[]" />
+                <label class="custom-control-label" for="color-{{ $color['id'] }}">{{ $color['color'] }}</label>
+                {{-- <span class="badge border font-weight-normal">150</span> --}}
+              </div>
+            @endforeach
           </form>
         </div>
         <!-- Color End -->
@@ -101,36 +47,24 @@
             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
               <input type="checkbox" class="custom-control-input" checked id="size-all" />
               <label class="custom-control-label capitalize" for="size-all">semua ukuran</label>
-              <span class="badge border font-weight-normal">1000</span>
+              {{-- <span class="badge border font-weight-normal">1000</span> --}}
             </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="size-1" />
-              <label class="custom-control-label" for="size-1">XS</label>
-              <span class="badge border font-weight-normal">150</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="size-2" />
-              <label class="custom-control-label" for="size-2">S</label>
-              <span class="badge border font-weight-normal">295</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="size-3" />
-              <label class="custom-control-label" for="size-3">M</label>
-              <span class="badge border font-weight-normal">246</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-              <input type="checkbox" class="custom-control-input" id="size-4" />
-              <label class="custom-control-label" for="size-4">L</label>
-              <span class="badge border font-weight-normal">145</span>
-            </div>
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-              <input type="checkbox" class="custom-control-input" id="size-5" />
-              <label class="custom-control-label" for="size-5">XL</label>
-              <span class="badge border font-weight-normal">168</span>
-            </div>
+            @foreach (App\Models\Size::get() as $size)
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input type="checkbox" class="custom-control-input" id="size-{{ $size['id'] }}" name="size[]" />
+                <label class="custom-control-label" for="size-{{ $size['id'] }}">{{ $size['size'] }}</label>
+                {{-- <span class="badge border font-weight-normal">150</span> --}}
+              </div>
+            @endforeach
           </form>
         </div>
         <!-- Size End -->
+
+        <!-- button filter -->
+        <div class="col-12 text-center">
+          <button class="btn btn-sm btn-outline-primary" id="applay-filter">Terapkan</button>
+        </div>
+        <!-- button filter -->
       </div>
       <!-- Shop Sidebar End -->
 
@@ -141,7 +75,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4">
               <form action="">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search by name" />
+                  <input type="text" class="form-control" placeholder="Cari berdasar nama" />
                   <div class="input-group-append">
                     <span class="input-group-text bg-transparent text-primary">
                       <i class="fa fa-search"></i>
@@ -165,7 +99,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-1.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-1.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -186,7 +121,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-2.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-2.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -207,7 +143,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-3.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-3.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -228,7 +165,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-4.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-4.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -249,7 +187,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-5.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-5.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -270,7 +209,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-6.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-6.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -291,7 +231,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-7.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-7.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -312,7 +253,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-8.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-8.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -333,7 +275,8 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
             <div class="card product-item border-0 mb-4">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-1.jpg')}}" alt="" />
+                <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-1.jpg') }}"
+                  alt="" />
               </div>
               <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
