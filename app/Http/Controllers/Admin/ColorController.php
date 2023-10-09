@@ -12,7 +12,8 @@ class ColorController extends Controller
 	public function index()
 	{
 		$title = 'Wrana';
-		return view('admin.pages.color.index', compact('title'));
+		$parent = 'pengaturan';
+		return view('admin.pages.color.index', compact('title', 'parent'));
 	}
 
 	public function dataTableColor()

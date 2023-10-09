@@ -13,6 +13,11 @@
   <!-- Library / Plugin Css Build -->
   <link rel="stylesheet" href="{{ asset('template/assets/css/core/libs.min.css') }}" />
 
+  {{-- font awaesome --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- Aos Animation Css -->
   <link rel="stylesheet" href="{{ asset('template/assets/vendor/aos/dist/aos.css') }}" />
 
@@ -36,6 +41,11 @@
 
   {{-- sweet alert --}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.min.css">
+
+  {{-- jodit editor --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.es2018.en.min.css"
+    integrity="sha512-+LpgB/uFVQcOMxLotyK9/l67AqyqBJMnz0rLDcSDtCZ/5h0vdGrbrWt1MnNhe6qWOJ06Qs8+qkfniww4WzoCEQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   {{-- main css --}}
   <link rel="stylesheet" href="{{ asset('styles/loading.css') }}">
@@ -478,6 +488,11 @@
 
   {{-- sweet alert --}}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
+
+  {{-- jodit editor --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"
+    integrity="sha512-6aIYUpIVYMx6EdN2TBchmmoIn+I45MJrYbbr66XZTnr0WnleWlhMbj2jVW8jlZ0fFxWSJmSKIO3muUyPJfRA4Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   {{-- main js --}}
   <script src="{{ asset('scripts/main.js') }}"></script>

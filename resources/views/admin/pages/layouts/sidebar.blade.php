@@ -157,7 +157,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ request()->route()->getName() === 'admin.size'? 'active': '' }}" href="{{ route('admin.size') }}">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.size'? 'active': '' }}"
+                href="{{ route('admin.size') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">
@@ -171,7 +172,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ request()->route()->getName() === 'admin.unit'? 'active': '' }}" href="{{ route('admin.unit') }}">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.unit'? 'active': '' }}"
+                href="{{ route('admin.unit') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">
@@ -185,7 +187,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ request()->route()->getName() === 'admin.province'? 'active': '' }}" href="{{ route('admin.province') }}">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.province'? 'active': '' }}"
+                href="{{ route('admin.province') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">
@@ -199,7 +202,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ request()->route()->getName() === 'admin.city'? 'active': '' }}" href="{{ route('admin.city') }}">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.city'? 'active': '' }}"
+                href="{{ route('admin.city') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">
@@ -218,7 +222,9 @@
 
         {{-- toko --}}
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-toko" role="button" aria-expanded="false"
+          <a class="nav-link {{ isset($parent) && $parent === 'toko' ? '' : 'collapse' }}" data-bs-toggle="collapse"
+            href="#sidebar-toko" role="button"
+            aria-expanded="{{ isset($parent) && $parent === 'toko' ? 'true' : 'false' }}"
             aria-controls="sidebar-toko">
             <i class="icon">
               <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
@@ -239,9 +245,11 @@
               </svg>
             </i>
           </a>
-          <ul class="sub-nav collapse" id="sidebar-toko" data-bs-parent="#sidebar-menu">
+          <ul class="sub-nav collapse {{ isset($parent) && $parent === 'toko' ? 'show' : '' }}" id="sidebar-toko"
+            data-bs-parent="#sidebar-menu">
             <li class="nav-item">
-              <a class="nav-link " href="#">
+              <a class="nav-link {{ request()->route()->getName() === 'admin.product'? 'active': '' }}"
+                href="{{ route('admin.product') }}">
                 <i class="icon">
                   <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24"
                     fill="currentColor">

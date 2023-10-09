@@ -15,7 +15,8 @@ class SubcategoryController extends Controller
   public function index()
   {
     $title = 'Subkategori';
-    return view('admin.pages.subcategory.index', compact('title'));
+    $parent = 'pengaturan';
+    return view('admin.pages.subcategory.index', compact('title', 'parent'));
   }
 
   public function dataTableSubcategory()

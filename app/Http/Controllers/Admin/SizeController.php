@@ -12,18 +12,23 @@ class SizeController extends Controller
 	public function index()
 	{
 		$title = 'Ukuran';
-		return view('admin.pages.size.index', compact('title'));
+		$parent = 'pengaturan';
+		return view('admin.pages.size.index', compact('title', 'parent'));
 	}
 
 	public function sizeDataTable()
 	{
 		// if (request()->ajax()) {
-			$sizes = Size::orderBy('id', 'asc')->get();
-			return DataTables::of($sizes)->addIndexColumn()->make(true);
+		$sizes = Size::orderBy('id', 'asc')->get();
+		return DataTables::of($sizes)->addIndexColumn()->make(true);
 		// }
 	}
 
-	public function ajaxUpdateSize(Request $request) {}
+	public function ajaxUpdateSize(Request $request)
+	{
+	}
 
-	public function ajaxDeleteSize(Request $request) {}
+	public function ajaxDeleteSize(Request $request)
+	{
+	}
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProvinceContrller;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubcategoryController;
@@ -74,5 +75,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/city-add', [CityController::class, 'ajaxAddCity'])->name('city-add');
     Route::match(['PUT', 'PATCH'], '/city-update', [CityController::class, 'ajaxUpdateCity'])->name('city-update');
     Route::delete('/city-delete', [CityController::class, 'ajaxDeleteCity'])->name('city-delete');
+
+    # route product
+    Route::get('product', [ProductController::class, 'index'])->name('product');
   });
 });

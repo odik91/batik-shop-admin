@@ -12,7 +12,8 @@ class ProvinceContrller extends Controller
 	public function index()
 	{
 		$title = 'Provinsi';
-		return view('admin.pages.province.index', compact('title'));
+		$parent = 'pengaturan';
+		return view('admin.pages.province.index', compact('title', 'parent'));
 	}
 
 	public function dataTable()

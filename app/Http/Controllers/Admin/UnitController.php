@@ -12,7 +12,8 @@ class UnitController extends Controller
 	public function index()
 	{
 		$title = 'Satuan';
-		return view('admin.pages.unit.index', compact('title'));
+		$parent = 'pengaturan';
+		return view('admin.pages.unit.index', compact('title', 'parent'));
 	}
 
 	public function dataTableUnit()

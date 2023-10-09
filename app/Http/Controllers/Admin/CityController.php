@@ -12,7 +12,8 @@ class CityController extends Controller
   public function index()
   {
     $title = 'Kabupaten - Kota';
-    return view('admin.pages.city.index', compact('title'));
+    $parent = 'pengaturan';
+    return view('admin.pages.city.index', compact('title', 'parent'));
   }
 
   public function dataTableCity()
