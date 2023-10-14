@@ -77,6 +77,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/city-delete', [CityController::class, 'ajaxDeleteCity'])->name('city-delete');
 
     # route product
-    Route::get('product', [ProductController::class, 'index'])->name('product');
+    Route::get('/product', [ProductController::class, 'index'])->name('product');
+    Route::get('/product-ajax-get-category', [ProductController::class, 'ajaxGetCategory'])->name('product-ajax-get-category');
+    Route::get('/product-ajax-get-subcategory', [ProductController::class, 'ajaxGetSubcategory'])->name('product-ajax-get-subcategory');
+    Route::get('/product-ajax-get-unit', [ProductController::class, 'ajaxGetUnit'])->name('product-ajax-get-unit');
+    Route::get('/product-ajax-size', [ProductController::class, 'ajaxGetSize'])->name('product-ajax-size');
+    Route::get('/product-ajax-colors', [ProductController::class, 'ajaxGetColor'])->name('product-ajax-colors');
   });
 });
