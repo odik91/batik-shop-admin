@@ -5,7 +5,7 @@
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
       <h1 class="font-weight-semi-bold text-uppercase mb-3">detail produk</h1>
       <div class="d-inline-flex">
-        <p class="m-0"><a href="{{route('public.home')}}">Beranda</a></p>
+        <p class="m-0"><a href="{{ route('public.shop') }}">Toko</a></p>
         <p class="m-0 px-2">-</p>
         <p class="m-0 capitalize">detail produk</p>
       </div>
@@ -16,22 +16,23 @@
 
   <!-- Shop Detail Start -->
   <div class="container-fluid py-5">
+    @if (Route::has('login'))
+      @auth
+        <input type="hidden" name="is-login" id="is-login" value="yes">
+      @else
+        <input type="hidden" name="is-login" id="is-login" value="no">
+      @endauth
+    @endif
     <div class="row px-xl-5">
       <div class="col-lg-5 pb-5">
         <div id="product-carousel" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner border">
-            <div class="carousel-item active">
-              <img class="w-100 h-100" src="{{asset('bootstrap-shop-template/img/product-1.jpg')}}" alt="Image">
-            </div>
-            <div class="carousel-item">
-              <img class="w-100 h-100" src="{{asset('bootstrap-shop-template/img/product-2.jpg')}}" alt="Image">
-            </div>
-            <div class="carousel-item">
-              <img class="w-100 h-100" src="{{asset('bootstrap-shop-template/img/product-3.jpg')}}" alt="Image">
-            </div>
-            <div class="carousel-item">
-              <img class="w-100 h-100" src="{{asset('bootstrap-shop-template/img/product-4.jpg')}}" alt="Image">
-            </div>
+            @foreach ($product->getGalleries as $key => $gallery)
+              <div class="carousel-item {{ $key == 0 ? 'active' : '' }}" style="max-height: 400px !important">
+                <img class="w-100 h-100" src="{{ asset('upload/images/' . $gallery['file']) }}"
+                  alt="{{ $gallery['file'] }}" style="object-fit: content">
+              </div>
+            @endforeach
           </div>
           <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
             <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -43,129 +44,118 @@
       </div>
 
       <div class="col-lg-7 pb-5">
-        <h3 class="font-weight-semi-bold">Colorful Stylish Shirt</h3>
-        <div class="d-flex mb-3">
-          <div class="text-primary mr-2">
+        <form action="#" method="POST" id="add-to-cart">
+          @csrf
+          <input type="hidden" id="attr" name="attr" value="{{ $product['id'] }}">
+          <input type="hidden" id="attr1" value="{{ $product['price'] }}">
+          <input type="hidden" id="attr2" value="{{ $product->getUnit['unit'] }}">
+          <input type="hidden" id="attr3" value="{{ $product['weight_estimation'] }}">
+
+          <h3 class="font-weight-semi-bold text-capitalize">{{ $product['product'] }}</h3>
+          <div class="d-flex mb-3">
+            {{-- <div class="text-primary mr-2">
             <small class="fas fa-star"></small>
             <small class="fas fa-star"></small>
             <small class="fas fa-star"></small>
             <small class="fas fa-star-half-alt"></small>
             <small class="far fa-star"></small>
           </div>
-          <small class="pt-1">(50 Reviews)</small>
-        </div>
-        <h3 class="font-weight-semi-bold mb-4">Rp150.00</h3>
-        <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita ea. Sanc
-          invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy. Accus labore stet, est
-          lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd rebum.</p>
-        <div class="d-flex mb-3">
-          <p class="text-dark font-weight-medium mb-0 mr-3">Ukuran:</p>
-          <form>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-1" name="size">
-              <label class="custom-control-label" for="size-1">XS</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-2" name="size">
-              <label class="custom-control-label" for="size-2">S</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-3" name="size">
-              <label class="custom-control-label" for="size-3">M</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-4" name="size">
-              <label class="custom-control-label" for="size-4">L</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="size-5" name="size">
-              <label class="custom-control-label" for="size-5">XL</label>
-            </div>
-          </form>
-        </div>
-        <div class="d-flex mb-4">
-          <p class="text-dark font-weight-medium mb-0 mr-3">Warna:</p>
-          <form>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="color-1" name="color">
-              <label class="custom-control-label" for="color-1">Hitam</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="color-2" name="color">
-              <label class="custom-control-label" for="color-2">Putih</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="color-3" name="color">
-              <label class="custom-control-label" for="color-3">Merah</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="color-4" name="color">
-              <label class="custom-control-label" for="color-4">Biru</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="color-5" name="color">
-              <label class="custom-control-label" for="color-5">Hijau</label>
-            </div>
-          </form>
-        </div>
-        <div class="d-flex align-items-center mb-4 pt-2">
-          <div class="input-group quantity mr-3" style="width: 130px;">
-            <div class="input-group-btn">
-              <button class="btn btn-primary btn-minus">
-                <i class="fa fa-minus"></i>
-              </button>
-            </div>
-            <input type="text" class="form-control bg-secondary text-center" value="1">
-            <div class="input-group-btn">
-              <button class="btn btn-primary btn-plus">
-                <i class="fa fa-plus"></i>
-              </button>
-            </div>
+          <small class="pt-1">(50 Reviews)</small> --}}
+            <small class="pt-1">Belum ada review</small>
           </div>
-          <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Tambah Ke Keranjang</button>
-        </div>
-        {{-- <div class="d-flex pt-2">
-          <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
-          <div class="d-inline-flex">
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a class="text-dark px-2" href="">
-              <i class="fab fa-pinterest"></i>
-            </a>
+          <h3 class="font-weight-semi-bold mb-4">Rp{{ number_format($product['price'], 0, ',', '.') }}</h3>
+          <p class="mb-4">
+            Kategori: <b>{{ $product->getSubcategory->getCategory['category'] }}</b><br>
+            Subkategori: <b>{{ $product->getSubcategory['subcategory'] }}</b><br>
+            Satuan: <b>{{ $product->getUnit['unit'] }}</b><br>
+            Berat: <b>{{ $product['weight_estimation'] }}</b><br>
+            Diskon: <b>{{ $product['discount'] ? $product['discount'] . '%' : '-' }}</b><br>
+          </p>
+          {{-- ukuran --}}
+          <div class="d-flex mb-3">
+            <p class="text-dark font-weight-medium mb-0 mr-3">Ukuran:</p>
+            @if (sizeof($product->getSizes) > 0)
+              @foreach ($product->getSizes as $key => $size)
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="size-{{ $key }}" name="size"
+                    value="{{ $size['size_id'] }}">
+                  <label class="custom-control-label"
+                    for="size-{{ $key }}">{{ $size->getDetailSize['size'] }}</label>
+                </div>
+              @endforeach
+            @else
+              <span class="text-capitalize text-info">pilihan ukuran tidak tersedia</span>
+            @endif
           </div>
-        </div> --}}
+          {{-- end ukuran --}}
+
+          {{-- warna --}}
+          <div class="d-flex mb-3">
+            <p class="text-dark font-weight-medium mb-0 mr-3">Warna:</p>
+            @if (sizeof($product->getColors) > 0)
+              @foreach ($product->getColors as $key => $color)
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="color-{{ $key }}" name="color"
+                    value="{{ $color['color_id'] }}">
+                  <label class="custom-control-label"
+                    for="color-{{ $key }}">{{ $color->getDetailColor['color'] }}</label>
+                </div>
+              @endforeach
+            @else
+              <span class="text-capitalize text-info">pilihan ukuran tidak tersedia</span>
+            @endif
+          </div>
+          {{-- end warna --}}
+
+          <div class="d-flex align-items-center mb-4 pt-2">
+            <div class="input-group quantity mr-3" style="width: 130px;">
+              <div class="input-group-btn">
+                <button type="button"class="btn btn-primary btn-minus check-info">
+                  <i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <input type="text" class="form-control bg-secondary text-center" value="1" id="quantity"
+                name="quantity">
+              <div class="input-group-btn">
+                <button type="button"class="btn btn-primary btn-plus check-info">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <button type="submit" id="add-to-cart" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i>
+              Tambah Ke
+              Keranjang</button>
+          </div>
+
+          {{-- shop info --}}
+          <div class="row text-primary">
+            <div class="col-sm-6">Estimasi berat</div>
+            <div class="col-sm-6 font-weight-bold text-right"><span
+                id="weight">{{ $product['weight_estimation'] }}</span>Kg</div>
+          </div>
+          <div class="row text-primary">
+            <div class="col-sm-6">Total</div>
+            <div class="col-sm-6 font-weight-bold text-right">Rp<span
+                id="total-price">{{ number_format($product['price'], 0, ',', '.') }}</span>,00</div>
+          </div>
+          {{-- shop info --}}
+        </form>
       </div>
     </div>
     <div class="row px-xl-5">
       <div class="col">
         <div class="nav nav-tabs justify-content-center border-secondary mb-4">
           <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Deskripsi</a>
-          <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Informasi</a>
+          {{-- <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Informasi</a> --}}
           <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
         </div>
         <div class="tab-content">
           <div class="tab-pane fade show active" id="tab-pane-1">
             <h4 class="mb-3">Deksripsi Produk</h4>
-            <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo
-              dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et,
-              lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod.
-              Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus
-              diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd
-              invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-            <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed
-              lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed
-              ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna
-              takimata justo et amet magna et.</p>
+            {!! $product['description'] !!}
           </div>
-          <div class="tab-pane fade" id="tab-pane-2">
-            <h4 class="mb-3">Additional Information</h4>
+          {{-- <div class="tab-pane fade" id="tab-pane-2">
+            <h4 class="mb-3">Informasi Tambahan</h4>
             <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo
               dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et,
               lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod.
@@ -206,13 +196,14 @@
                 </ul>
               </div>
             </div>
-          </div>
+          </div> --}}
           <div class="tab-pane fade" id="tab-pane-3">
             <div class="row">
               <div class="col-md-6">
                 <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
                 <div class="media mb-4">
-                  <img src="{{asset('bootstrap-shop-template/img/user.jpg')}}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                  <img src="{{ asset('bootstrap-shop-template/img/user.jpg') }}" alt="Image"
+                    class="img-fluid mr-3 mt-1" style="width: 45px;">
                   <div class="media-body">
                     <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
                     <div class="text-primary mb-2">
@@ -277,7 +268,8 @@
         <div class="owl-carousel related-carousel">
           <div class="card product-item border-0">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-1.jpg')}}" alt="">
+              <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-1.jpg') }}"
+                alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -295,7 +287,8 @@
           </div>
           <div class="card product-item border-0">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-2.jpg')}}" alt="">
+              <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-2.jpg') }}"
+                alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -313,7 +306,8 @@
           </div>
           <div class="card product-item border-0">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-3.jpg')}}" alt="">
+              <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-3.jpg') }}"
+                alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -331,7 +325,8 @@
           </div>
           <div class="card product-item border-0">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-4.jpg')}}" alt="">
+              <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-4.jpg') }}"
+                alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -349,7 +344,8 @@
           </div>
           <div class="card product-item border-0">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="{{asset('bootstrap-shop-template/img/product-5.jpg')}}" alt="">
+              <img class="img-fluid w-100" src="{{ asset('bootstrap-shop-template/img/product-5.jpg') }}"
+                alt="">
             </div>
             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
               <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
@@ -371,3 +367,7 @@
   </div>
   <!-- Products End -->
 @endsection
+
+@push('js')
+  <script src="{{ asset('scripts/public/detail-product.js') }}"></script>
+@endpush

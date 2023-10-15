@@ -57,7 +57,7 @@
       {{-- shop cart --}}
       <a href="{{ route('public.keranjang-belanja') }}" class="btn border">
         <i class="fas fa-shopping-cart text-primary"></i>
-        <span class="badge">0</span>
+        <span class="badge" id="total-item-in-cart">0</span>
       </a>
     </div>
   </div>

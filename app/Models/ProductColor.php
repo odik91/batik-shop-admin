@@ -11,4 +11,8 @@ class ProductColor extends Model
 	use HasFactory, Notifiable;
 
 	protected $guarded = [];
+
+	public function getDetailColor() {
+		return $this->belongsTo(Color::class, 'color_id', 'id');
+	}
 }

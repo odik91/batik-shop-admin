@@ -11,4 +11,8 @@ class ProductSize extends Model
 	use HasFactory, Notifiable;
 
 	protected $guarded = [];
+
+	public function getDetailSize() {
+		return $this->belongsTo(Size::class, 'size_id', 'id');
+	}
 }

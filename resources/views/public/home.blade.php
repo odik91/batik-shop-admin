@@ -101,7 +101,7 @@
       @foreach ($new_products as $product)
         <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
           <div class="card product-item border-0 mb-4">
-            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" style="max-height: 305px !important;">
               <img class="img-fluid w-100" src="{{ asset('upload/images/' . $product->getGalleries[0]['file']) }}"
                 alt="{{ $product['slug'] }}" />
             </div>
@@ -113,10 +113,10 @@
               </div>
             </div>
             <div class="card-footer d-flex justify-content-between bg-light border">
-              <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
+              <a href="{{ route('public.product-detail', $product['slug']) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
                 Detail</a>
               <a href="" class="btn btn-sm text-dark p-0"><i
-                  class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                  class="fas fa-shopping-cart text-primary mr-1"></i>Tambahkan ke keranjang</a>
             </div>
           </div>
         </div>

@@ -12,4 +12,9 @@ class Subcategory extends Model
 	use HasFactory, Notifiable, SoftDeletes;
 
 	protected $guarded = [];
+
+	public function getCategory()
+	{
+		return $this->belongsTo(Category::class, 'category_id', 'id');
+	}
 }

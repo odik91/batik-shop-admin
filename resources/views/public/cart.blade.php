@@ -178,3 +178,7 @@
   </div>
   <!-- Cart End -->
 @endsection
+
+@push('js')
+  
+@endpush

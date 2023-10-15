@@ -14,10 +14,11 @@ class ShopController extends Controller
     return view('public.shop', compact('title', 'products'));
   }
 
-  public function productDetail($id)
+  public function productDetail($slug)
   {
     $title = 'Detail Produk';
-    return view('public.product-detail', compact('title'));
+    $product = Product::where('slug', $slug)->first();
+    return view('public.product-detail', compact('title', 'product'));
   }
 
   public function shoppingCart()

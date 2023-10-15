@@ -209,8 +209,8 @@ class ProductController extends Controller
 			$products = Product::join('categories', 'products.category_id', 'categories.id')
 				->join('subcategories', 'products.subcategory_id', 'subcategories.id')
 				->join('units', 'products.unit_id', 'units.id')
-				->leftJoin('product_sizes', 'products.id', 'product_sizes.product_id')
-				->leftJoin('product_colors', 'products.id', 'product_colors.product_id')
+				// ->leftJoin('product_sizes', 'products.id', 'product_sizes.product_id')
+				// ->leftJoin('product_colors', 'products.id', 'product_colors.product_id')
 				// ->leftJoin('colors', 'product_colors.color_id', 'colors.id')
 				->select(
 					'products.id',
