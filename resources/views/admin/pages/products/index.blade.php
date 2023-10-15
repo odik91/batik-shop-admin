@@ -25,13 +25,15 @@
               <table id="table-Product" class="table table-striped w-100" data-toggle="data-table">
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Thumb</th>
-                    <th>Produk</th>
-                    <th>Kategori</th>
-                    <th>Subkategori</th>
-                    <th>Deskripsi</th>
-                    <th>Diskon</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Thumb</th>
+                    <th class="text-center">Produk</th>
+                    <th class="text-center">Kategori</th>
+                    <th class="text-center">Subkategori</th>
+                    <th class="text-center">Deskripsi</th>
+                    <th class="text-center">Harga (Rp)</th>
+                    <th class="text-center">Diskon</th>
+                    <th class="text-center">Berat</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -44,6 +46,10 @@
         {{-- add product layout --}}
         @include('admin.pages.products.sections.add-product')
         {{-- end add product layout --}}
+
+        {{-- detail product layout --}}
+        @include('admin.pages.products.sections.detail-product')
+        {{-- detail product layout --}}
       </div>
     </div>
   </div>

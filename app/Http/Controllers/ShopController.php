@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -9,7 +10,8 @@ class ShopController extends Controller
   public function index()
   {
     $title = 'Toko';
-    return view('public.shop', compact('title'));
+    $products = Product::paginate(9);
+    return view('public.shop', compact('title', 'products'));
   }
 
   public function productDetail($id)

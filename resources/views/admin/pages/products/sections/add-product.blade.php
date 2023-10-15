@@ -18,14 +18,15 @@
       <small class="text-info"><span class="text-danger">(*)</span> Wajib diisi</small>
     </div>
   </div>
-  <div class="card-body" id="main-layout">
-    <form action="#" method="POST" class="form-group mt-2 require-form-validation" id="form-add-product" enctype="multipart/form-data">
+  <div class="card-body">
+    <form action="#" method="POST" class="form-group mt-2 require-form-validation" id="form-add-product"
+      enctype="multipart/form-data">
       @csrf
       <div class="mb-3 row">
         <label for="product-name" class="col-sm-2 col-form-label">Produk <span class="text-danger">*</span></label>
         <div class="col-sm-10">
-          <input type="text" class="form-control text-capitalize" id="product-name" name="product-name" placeholder="Nama Produk"
-            required autocomplete="off">
+          <input type="text" class="form-control text-capitalize" id="product-name" name="product-name"
+            placeholder="Nama Produk" required autocomplete="off">
         </div>
       </div>
       <div class="mb-3 row">
@@ -109,14 +110,26 @@
         </div>
       </div>
       <div class="mb-3 row">
-        <label for="weight" class="col-sm-2 col-form-label">Perkiraan Berat <span class="text-danger">*</span></label>
+        <label for="weight" class="col-sm-2 col-form-label">Perkiraan Berat <span
+            class="text-danger">*</span></label>
         <div class="col-sm-10">
           <div class="input-group">
             <span class="input-group-text" id="weight-display">Kg</span>
             <input type="text" name="weight" id="weight" class="form-control number" placeholder="0"
               aria-label="weight" aria-describedby="weight-display" required>
           </div>
-          <div id="weight-display-help" class="form-text">Digunakan untuk estimasi ongkos kirim</div>
+          <div id="weight-display-help" class="form-text text-info text-capitalize">
+            <i>perkiraan berat digunakan untuk estimasi ongkos kirim</i>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="aktif" class="col-sm-2 col-form-label">Produk Aktif?</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="aktif" name="aktif">
+            <option value="Y" selected>Ya</option>
+            <option value="T">Tidak</option>
+          </select>
         </div>
       </div>
       <div class="text-center">
@@ -127,6 +140,10 @@
           onclick="showHideProductLayer(this)">
           Batal
         </button>
+        {{-- <button type="button" id="close-add-product" class="btn btn-outline-secondary" data-targeted="main-layout"
+          onclick="showHideProductLayer('main-layout')">
+          Batal
+        </button> --}}
       </div>
     </form>
   </div>
