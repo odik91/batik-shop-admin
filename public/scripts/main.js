@@ -267,13 +267,8 @@ const generateRandomKey = () => {
   ).join("");
 };
 
-// let q = generateRandomKey()
-// let text = 'test'
-// console.log(text);
-// let encrtypt = encryptText(text, q)
-// console.log(encrtypt);
-// let decrtypt = decryptText(encrtypt, q)
-// console.log(decrtypt);
+// setup env
+const ENV_KEY = `fb1574444afda107c1612b7b157bbc58`
 
 // fungsi hapus targeted local storage class based
 const removeTargetLocalStorage = (elementClass, targetStorage) => {

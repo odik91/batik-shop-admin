@@ -18,211 +18,109 @@ class RegionSeeder extends Seeder
 		$now = Carbon::now();
 		$data = [
 			[
-				'province' => 'Aceh',
-				'code' => 'ID-AC',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Bali"
 			],
 			[
-				'province' => 'Sumatra Utara',
-				'code' => 'ID-SU',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Bangka Belitung"
 			],
 			[
-				'province' => 'Sumatra Barat',
-				'code' => 'ID-SB',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Banten"
 			],
 			[
-				'province' => 'Riau',
-				'code' => 'ID-RI',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Bengkulu"
 			],
 			[
-				'province' => 'Jambi',
-				'code' => 'ID-JA',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "DI Yogyakarta"
 			],
 			[
-				'province' => 'Sumatra Selatan',
-				'code' => 'ID-SS',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "DKI Jakarta"
 			],
 			[
-				'province' => 'Bengkulu',
-				'code' => 'ID-BE',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Gorontalo"
 			],
 			[
-				'province' => 'Lampung',
-				'code' => 'ID-LA',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Jambi"
 			],
 			[
-				'province' => 'Kepulauan Bangka Belitung',
-				'code' => 'ID-BB',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Jawa Barat"
 			],
 			[
-				'province' => 'Kepulauan Riau',
-				'code' => 'ID-KR',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Jawa Tengah"
 			],
 			[
-				'province' => 'Daerah Khusus Ibukota Jakarta',
-				'code' => 'ID-JK',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Jawa Timur"
 			],
 			[
-				'province' => 'Jawa Barat',
-				'code' => 'ID-JB',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Kalimantan Barat"
 			],
 			[
-				'province' => 'Jawa Tengah',
-				'code' => 'ID-JT',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Kalimantan Selatan"
 			],
 			[
-				'province' => 'Daerah Istimewa Yogyakarta',
-				'code' => 'ID-YO',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Kalimantan Tengah"
 			],
 			[
-				'province' => 'Jawa Timur',
-				'code' => 'ID-JI',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Kalimantan Timur"
 			],
 			[
-				'province' => 'Banten',
-				'code' => 'ID-BT',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Kalimantan Utara"
 			],
 			[
-				'province' => 'Bali',
-				'code' => 'ID-BA',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Kepulauan Riau"
 			],
 			[
-				'province' => 'Nusa Tenggara Barat',
-				'code' => 'ID-NB',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Lampung"
 			],
 			[
-				'province' => 'Nusa Tenggara Timur',
-				'code' => 'ID-NT',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Maluku"
 			],
 			[
-				'province' => 'Kalimantan Barat',
-				'code' => 'ID-KB',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Maluku Utara"
 			],
 			[
-				'province' => 'Kalimantan Tengah',
-				'code' => 'ID-KT',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Nanggroe Aceh Darussalam (NAD)"
 			],
 			[
-				'province' => 'Kalimantan Selatan',
-				'code' => 'ID-KS',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Nusa Tenggara Barat (NTB)"
 			],
 			[
-				'province' => 'Kalimantan Timur',
-				'code' => 'ID-KI',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Nusa Tenggara Timur (NTT)"
 			],
 			[
-				'province' => 'Kalimantan Utara',
-				'code' => 'ID-KU',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Papua"
 			],
 			[
-				'province' => 'Sulawesi Utara',
-				'code' => 'ID-SA',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Papua Barat"
 			],
 			[
-				'province' => 'Sulawesi Tengah',
-				'code' => 'ID-ST',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Riau"
 			],
 			[
-				'province' => 'Sulawesi Selatan',
-				'code' => 'ID-SN',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sulawesi Barat"
 			],
 			[
-				'province' => 'Sulawesi Tenggara',
-				'code' => 'ID-SG',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sulawesi Selatan"
 			],
 			[
-				'province' => 'Gorontalo',
-				'code' => 'ID-GO',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sulawesi Tengah"
 			],
 			[
-				'province' => 'Sulawesi Barat',
-				'code' => 'ID-SR',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sulawesi Tenggara"
 			],
 			[
-				'province' => 'Maluku',
-				'code' => 'ID-MA',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sulawesi Utara"
 			],
 			[
-				'province' => 'Maluku Utara',
-				'code' => 'ID-MU',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sumatera Barat"
 			],
 			[
-				'province' => 'Papua',
-				'code' => 'ID-PA',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sumatera Selatan"
 			],
 			[
-				'province' => 'Papua Barat',
-				'code' => 'ID-PB',
-				'created_at' => $now, 
-				'updated_at' => $now
+				"province" => "Sumatera Utara"
 			],
-		];			
+		];
 
-		Province::insert($data);			
+		Province::insert($data);
 	}
 }

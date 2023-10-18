@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="_token" content="{{ csrf_token() }}">
   <title>Batikmu - {{ $title }}</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="Free HTML Templates" name="keywords">
@@ -28,11 +29,22 @@
   <!-- Customized Bootstrap Stylesheet -->
   <link href="{{ asset('bootstrap-shop-template/css/style.css') }}" rel="stylesheet">
 
+  {{-- select2 --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+
   <!-- Main Stylesheet -->
+  <link href="{{ asset('styles/loading.css') }}" rel="stylesheet">
   <link href="{{ asset('styles/main.css') }}" rel="stylesheet">
+
+  @stack('style')
 </head>
 
 <body>
+  {{-- loading animation --}}
+  <div class="spinner-box loading-rtf d-none" id="loading-rtf">
+    <div class="three-quarter-spinner"></div>
+  </div>
+
   <!-- Topbar Start -->
   @include('public.layouts.topbar')
   <!-- Topbar End -->
@@ -73,6 +85,9 @@
 
   {{-- sweet alert --}}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
+
+  {{-- select2 --}}
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script src="{{ asset('scripts/main.js') }}"></script>
   <script src="{{ asset('scripts/public/main-public.js') }}"></script>

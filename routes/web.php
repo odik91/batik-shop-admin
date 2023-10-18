@@ -30,7 +30,15 @@ Route::get('/home', [HomeController::class, 'index'])->name('public.home');
 Route::get('/shop', [ShopController::class, 'index'])->name('public.shop');
 Route::get('/product-detail/{id}', [ShopController::class, 'productDetail'])->name('public.product-detail');
 Route::get('/keranjang-belanja', [ShopController::class, 'shoppingCart'])->name('public.keranjang-belanja');
+
+// checkout
 Route::get('/checkout', [ShopController::class, 'checkout'])->name('public.checkout');
+Route::post('/checkout-detail-product-in-cart', [ShopController::class, 'detailProductInCart'])->name('public.checkout-detail-product-in-cart');
+Route::get('/ajax-fetch-province', [ShopController::class, 'ajaxFetchProvinceFromRajaOngkir'])->name('public.ajax-fetch-province');
+Route::get('/ajax-fetch-city', [ShopController::class, 'ajaxFetchCityFromRajaOngkir'])->name('public.ajax-fetch-city');
+Route::get('/ajax-fetch-ongkir', [ShopController::class, 'ajaxFetchBiayaOngkir'])->name('public.ajax-fetch-ongkir');
+
+// whishlist
 Route::get('/wishlists', [ShopController::class, 'wishlists'])->name('public.wishlists');
 
 # route contact
