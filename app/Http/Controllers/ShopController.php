@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Product;
 use App\Models\ProductGallery;
 use App\Models\ProductSize;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -81,71 +83,26 @@ class ShopController extends Controller
   public function ajaxFetchProvinceFromRajaOngkir()
   {
     if (request()->ajax()) {
-      $curl = curl_init();
-      $key = env('RAJA_ONGKIR');
+      $provinces = Province::orderBy('province', 'asc')
+        ->select('id', 'province')
+        ->get();
 
-      curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-          "key: $key"
-        ),
-      ));
-
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-      $data = json_decode($response);
-
-      curl_close($curl);
-
-      if ($err) {
-        return response()->json([
-          'message' => "cURL Error #:" . $err
-        ], 422);;
-      } else {
-        return response()->json($data, 200);
-      }
+      return response()->json($provinces, 200);
     }
   }
 
   public function ajaxFetchCityFromRajaOngkir(Request $request)
   {
     if (request()->ajax()) {
-      $curl = curl_init();
-      $key = env('RAJA_ONGKIR');
-      $provinceId = $request['id'];
+      $cities = City::where('province_id', $request['id'])
+        ->select(
+          'id',
+          'type',
+          'city'
+        )
+        ->get();
 
-      curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.rajaongkir.com/starter/city?province=$provinceId",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-          "key: $key"
-        ),
-      ));
-
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-      $data = json_decode($response);
-
-      curl_close($curl);
-
-      if ($err) {
-        return response()->json([
-          'message' => "cURL Error #:" . $err
-        ], 422);;
-      } else {
-        return response()->json($data, 200);
-      }
+      return response()->json($cities, 200);
     }
   }
 
@@ -188,6 +145,12 @@ class ShopController extends Controller
       } else {
         return response()->json($data, 200);
       }
+    }
+  }
+
+  public function addToCart(Request $request) {
+    if (request()->ajax()) {
+      return response()->json($request->all(), 200);
     }
   }
 }

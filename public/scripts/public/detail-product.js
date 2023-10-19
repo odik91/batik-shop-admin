@@ -15,7 +15,7 @@ $(() => {
     price = attr1.value;
     unit = attr2.value;
     weight = attr3.value;
-    is_login = attr4.value;
+    is_login = attr4.value || 'no';
 
     attr.remove();
     attr1.remove();
@@ -52,53 +52,21 @@ addToCart.addEventListener("submit", (e) => {
   const sizeElement = document.getElementsByName("size");
   const colorElement = document.getElementsByName("color");
 
-  if (is_login === "yes") {
-    const url = ``;
-  } else {
-    const formData = new FormData(addToCart);
-    const data = {
-      id: localId,
-      size: formData.get("size"),
-      color: formData.get("color"),
-      quantity: formData.get("quantity"),
-    };
+  const formData = new FormData(addToCart);
+  console.log(formData);
+  const data = {
+    id: localId,
+    size: formData.get("size"),
+    color: formData.get("color"),
+    quantity: formData.get("quantity"),
+  };
+  console.log(data);
 
-    if (sizeElement.length > 0) {
-      if (!data.size) {
-        Swal.fire({
-          title: "Perhatian!",
-          html: "Mohon pilih ukuran terlebih dahulu",
-          icon: "warning",
-          showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Mengerti",
-          allowOutsideClick: false,
-        });
-        return;
-      }
-    }
-
-    if (colorElement.length > 0) {
-      if (!data.color) {
-        Swal.fire({
-          title: "Perhatian!",
-          html: "Mohon pilih warna terlebih dahulu",
-          icon: "warning",
-          showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Mengerti",
-          allowOutsideClick: false,
-        });
-        return;
-      }
-    }
-
-    if (Number(data.quantity) === 0) {
+  if (sizeElement.length > 0) {
+    if (!data.size) {
       Swal.fire({
         title: "Perhatian!",
-        html: "Mohon isi kuantitas barang terlebih dahulu",
+        html: "Mohon pilih ukuran terlebih dahulu",
         icon: "warning",
         showCancelButton: false,
         confirmButtonColor: "#3085d6",
@@ -108,9 +76,49 @@ addToCart.addEventListener("submit", (e) => {
       });
       return;
     }
+  }
 
+  if (colorElement.length > 0) {
+    if (!data.color) {
+      Swal.fire({
+        title: "Perhatian!",
+        html: "Mohon pilih warna terlebih dahulu",
+        icon: "warning",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Mengerti",
+        allowOutsideClick: false,
+      });
+      return;
+    }
+  }
+
+  if (Number(data.quantity) === 0) {
+    Swal.fire({
+      title: "Perhatian!",
+      html: "Mohon isi kuantitas barang terlebih dahulu",
+      icon: "warning",
+      showCancelButton: false,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Mengerti",
+      allowOutsideClick: false,
+    });
+    return;
+  }
+
+  if (is_login === "yes") {
+    const url = `ajax-add-to-cart`;
+    data['_token'] = formData.get('_token')
+    console.log(data);
+    // $.ajax({
+    //   url,
+    //   type: 'POST',
+    // })
+  } else {
+    console.log(data);
     let localData = JSON.parse(localStorage.getItem("cart-item"));
-    console.log(localData);
 
     if (localData) {
       const existingData = localData.find((item) => {
@@ -131,7 +139,6 @@ addToCart.addEventListener("submit", (e) => {
     } else {
       localStorage.setItem("cart-item", JSON.stringify([data]));
     }
-
 
     const cartElement = document.getElementById("total-item-in-cart");
     if (localData) {

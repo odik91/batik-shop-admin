@@ -115,14 +115,14 @@
                 </button>
               </div>
               <input type="text" class="form-control bg-secondary text-center" value="1" id="quantity"
-                name="quantity">
+                name="quantity" min="1">
               <div class="input-group-btn">
                 <button type="button"class="btn btn-primary btn-plus check-info">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>
             </div>
-            <button type="submit" id="add-to-cart" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i>
+            <button type="submit" id="button-add-to-cart" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i>
               Tambah Ke
               Keranjang</button>
           </div>

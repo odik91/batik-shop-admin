@@ -37,6 +37,7 @@ Route::post('/checkout-detail-product-in-cart', [ShopController::class, 'detailP
 Route::get('/ajax-fetch-province', [ShopController::class, 'ajaxFetchProvinceFromRajaOngkir'])->name('public.ajax-fetch-province');
 Route::get('/ajax-fetch-city', [ShopController::class, 'ajaxFetchCityFromRajaOngkir'])->name('public.ajax-fetch-city');
 Route::get('/ajax-fetch-ongkir', [ShopController::class, 'ajaxFetchBiayaOngkir'])->name('public.ajax-fetch-ongkir');
+Route::post('/ajax-add-to-cart', [ShopController::class, 'addToCart'])->name('public.ajax-add-to-cart');
 
 // whishlist
 Route::get('/wishlists', [ShopController::class, 'wishlists'])->name('public.wishlists');

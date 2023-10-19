@@ -88,7 +88,7 @@ $(() => {
           },
         });
       }
-    }
+    } else {}
   } catch (error) {
     console.log("user active");
   }
@@ -106,10 +106,9 @@ $(() => {
       success: (data) => {
         let options = `<option value="" selected disabled>Pilih provinsi</option>`;
         hideLoadingAnimation();
-        const response = data.rajaongkir.results;
-        response.forEach((item) => {
-          const { province_id, province } = item;
-          options += `<option value="${province_id}">${province}</option>`;
+        data.forEach((item) => {
+          const { id, province } = item;
+          options += `<option value="${id}">${province}</option>`;
         });
         provinsiElement.innerHTML = options;
       },
@@ -140,11 +139,10 @@ $(() => {
           dataType: false,
           success: (data) => {
             let options = `<option value="" selected disabled>Pilih kabupaten kota</option>`;
-            const response = data.rajaongkir.results;
-            response.forEach((item) => {
-              const { city_id, city_name, type } = item;
-              options += `<option value="${city_id}">${
-                type + " " + city_name
+            data.forEach((item) => {
+              const { id, city, type } = item;
+              options += `<option value="${id}">${
+                type + " " + city
               }</option>`;
             });
             cityElement.innerHTML = options;
