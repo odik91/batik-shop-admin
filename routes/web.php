@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicUserController;
@@ -47,6 +48,11 @@ Route::get('/contact-us', [ContactController::class, 'index'])->name('public.con
 
 # route profile
 Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');
+
+// route cart for user is login
+Route::group(['middleware' => 'auth'], function () {
+	Route::post('/ajax-get-user-cart', [CartController::class, 'ajaxGetCartUser'])->name('cart.ajax-get-user-cart');
+});
 
 # route admin
 // Route::get('/admin/login', function () {

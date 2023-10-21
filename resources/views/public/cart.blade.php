@@ -113,24 +113,10 @@
               <div class="form-group row px-3">
                 <button type="button" id="check-layanan-kurir" class="btn btn-block btn-sm btn-info">Cek Layanan</button>
               </div>
-              {{-- <div class="form-group row">
-                <label for="service" class="col-sm-4 col-form-label">Layanan</label>
-                <div class="col-sm-8">
-                  <select class="form-control" name="service" id="service">
-                    <option value="" selected disabled>Pilih layanan</option>
-                  </select>
-                </div>
-              </div> --}}
               <div class="row" id="list-layanan">                
               </div>
             </div>
           </div>
-          {{-- <div class="input-group">
-            <input type="text" class="form-control p-4" placeholder="Coupon Code">
-            <div class="input-group-append">
-              <button class="btn btn-primary">Gunakan Kupon</button>
-            </div>
-          </div> --}}
           <div class="card border-secondary mb-5">
             <div class="card-header bg-secondary border-0">
               <h4 class="font-weight-semi-bold m-0">Informasi Belanja</h4>
@@ -138,23 +124,25 @@
             <div class="card-body">
               <div class="d-flex justify-content-between mb-3 pt-1">
                 <h6 class="font-weight-medium">Subtotal</h6>
-                <h6 class="font-weight-medium" id="subtotal">Rp150</h6>
+                <h6 class="font-weight-medium">Rp<span id="subtotal"></span></h6>
               </div>
               <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">Shipping</h6>
-                <h6 class="font-weight-medium" id="shipping">Rp0</h6>
+                <h6 class="font-weight-medium">Rp<span id="shipping"></span></h6>
               </div>
             </div>
             <div class="card-footer border-secondary bg-transparent">
               <div class="d-flex justify-content-between mt-2">
                 <h5 class="font-weight-bold">Total</h5>
-                <h5 class="font-weight-bold" id="grand-total">Rp160</h5>
+                <h5 class="font-weight-bold">Rp<span id="grand-total"></span></h5>
               </div>
               {{-- <button class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke Pemesanan</button> --}}
               @if (Route::has('login'))
                 @auth
-                  <a href="{{ route('public.checkout') }}" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
-                    Pemesanan</a>
+                  {{-- <a href="{{ route('public.checkout') }}" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
+                    Pemesanan</a> --}}
+                    <button type="submit" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
+                      Pemesanan</button>
                 @else
                   <a href="{{ route('login') }}"
                     class="btn btn-block btn-primary my-3 py-3 text-capitalize text-light">Login untuk memesan</a>

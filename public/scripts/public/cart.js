@@ -75,7 +75,7 @@ $(() => {
                 <td class="align-middle">${commify(
                   Number(quantity) * Number(price)
                 )}</td>
-                <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                <td class="align-middle"><button type="button" onclick="removeItem(this)" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
               </tr>
               `;
             });
@@ -88,7 +88,122 @@ $(() => {
           },
         });
       }
-    } else {}
+    } else {
+      showLoadingAnimation();
+      const url = `ajax-get-user-cart`;
+      const csrf_token = $('meta[name="_token"]').attr("content");
+      $.ajax({
+        url,
+        type: "POST",
+        data: { _token: csrf_token },
+        success: (data) => {
+          hideLoadingAnimation();
+          const tableBody = document.getElementById("detail-cart");
+          let display = "";
+          let subtotal = 0;
+          let item_to_store = [];
+          data.forEach((item) => {
+            const {
+              cart_id,
+              id,
+              size_id,
+              color_id,
+              quantity,
+              product,
+              price,
+              weight_estimation,
+              color,
+              size,
+              total,
+              image,
+            } = item;
+
+            item_to_store = [
+              ...item_to_store,
+              {
+                id,
+                product,
+                size_id,
+                size,
+                color_id,
+                color,
+                price,
+                weight_estimation,
+                image,
+                quantity,
+                total,
+              },
+            ];
+            subtotal += Number(total);
+            display += `
+              <tr>
+                <td class="align-middle text-capitalize">
+                  <div class="card">
+                    <img class="card-img-top" src="/upload/images/${image}" alt="${image}">
+                    <div class="card-body p-0 m-0">
+                      <p class="card-text p-1">${product}</p>
+                    </div>
+                  </div>                
+                </td>
+                <td class="align-middle">${color || "-"}</td>
+                <td class="align-middle">${size || "-"}</td>
+                <td class="align-middle">${commify(Number(price))}</td>
+                <td class="align-middle">
+                  <div class="input-group quantity mx-auto" style="width: 100px;">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-primary btn-minus" onclick="decrease(this, '${id}', ${
+              size_id ? "'" + size_id + "'" : null
+            }, ${color_id ? "'" + color_id + "'" : null})">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                    </div>
+                    <input type="text" class="form-control form-control-sm bg-secondary text-center" name="total-peritem[]" value="${commify(
+                      Number(quantity)
+                    )}" readonly>
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-primary btn-plus" onclick="increase(this, '${id}', ${
+              size_id ? "'" + size_id + "'" : null
+            }, ${color_id ? "'" + color_id + "'" : null})">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="align-middle">${commify(
+                  Number(quantity) * Number(price)
+                )}</td>
+                <td class="align-middle">
+                  <button type="button" class="btn btn-sm btn-primary remove-item" data-cart="${cart_id}" onclick="removeItem(this)">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              `;
+          });
+          document.getElementById("subtotal").innerHTML = commify(subtotal);
+          tableBody.innerHTML = display;
+          localStorage.setItem(
+            "detail-cart-item",
+            JSON.stringify(item_to_store)
+          );
+          localStorage.removeItem("cart-item");
+          grandTotal();
+        },
+        error: (data) => {
+          hideLoadingAnimation();
+          Swal.fire({
+            title: "Perhatian!",
+            html: data.responseJSON.message,
+            icon: "warning",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Mengerti",
+            allowOutsideClick: false,
+          });
+        },
+      });
+    }
   } catch (error) {
     console.log("user active");
   }
@@ -141,9 +256,7 @@ $(() => {
             let options = `<option value="" selected disabled>Pilih kabupaten kota</option>`;
             data.forEach((item) => {
               const { id, city, type } = item;
-              options += `<option value="${id}">${
-                type + " " + city
-              }</option>`;
+              options += `<option value="${id}">${type + " " + city}</option>`;
             });
             cityElement.innerHTML = options;
             cityElement.disabled = false;
@@ -154,6 +267,7 @@ $(() => {
             console.log(data);
           },
         });
+        grandTotal();
       });
 
     $("#kota")
@@ -166,6 +280,7 @@ $(() => {
       .on("select2:select", (e) => {
         document.getElementById("kurir").disabled = false;
         pilihKurir.disabled = false;
+        grandTotal();
       });
   } catch (error) {
     console.log("fail to fetch raja ongkir");
@@ -188,6 +303,36 @@ pilihKurir.addEventListener("input", (e) => {
     });
   }
 });
+
+// fungsi kalkulasi total
+const grandTotal = () => {
+  const data = JSON.parse(localStorage.getItem("detail-cart-item"));
+  const shippingElement = document.getElementById("shipping");
+  const subtotalElement = document.getElementById("subtotal");
+  const grandTotal = document.getElementById("grand-total");
+  const service = document.getElementsByName("service");
+  let shippingExpenses = 0;
+  let subtotal = 0;
+
+  try {
+    service.forEach((item) => {
+      if (item.checked) {
+        shippingExpenses = item.value;
+      }
+    });
+
+    data.forEach((item) => {
+      subtotal += Number(item.total);
+    });
+  } catch (error) {
+    console.log("service not available");
+  }
+
+  subtotalElement.innerHTML = commify(subtotal);
+  shippingElement.innerHTML = commify(shippingExpenses);
+
+  grandTotal.innerHTML = commify(Number(subtotal) + Number(shippingExpenses));
+};
 
 document.getElementById("check-layanan-kurir").addEventListener("click", () => {
   const getKota = document.getElementById("kota");
@@ -235,7 +380,9 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
         display += `
         <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="service" id="service-${service}" value="option1" checked>
+            <input class="form-check-input" type="radio" name="service" id="service-${service}" value="${
+          cost[0].value
+        }">
             <label class="form-check-label" for="service-${service}">
               <span>${service}</span>
               <br>
@@ -252,6 +399,12 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
       });
 
       listLayanan.innerHTML = display;
+      document.getElementsByName("service").forEach((element) => {
+        element.addEventListener("input", () => {
+          grandTotal();
+        });
+      });
+      grandTotal();
       hideLoadingAnimation();
     },
     error: (data) => {
@@ -262,19 +415,19 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
 });
 
 const calculateWeight = () => {
-  if (logoutElement === null) {
-    const data = JSON.parse(localStorage.getItem("detail-cart-item"));
-    try {
-      let weightTotal = 0;
-      data.forEach((item) => {
-        let calculate = Number(item.quantity) * Number(item.weight_estimation);
-        weightTotal += calculate;
-      });
-      return weightTotal;
-    } catch (error) {
-      console.log("unable to calculate");
-    }
+  // if (logoutElement === null) {
+  const data = JSON.parse(localStorage.getItem("detail-cart-item"));
+  try {
+    let weightTotal = 0;
+    data.forEach((item) => {
+      let calculate = Number(item.quantity) * Number(item.weight_estimation);
+      weightTotal += calculate;
+    });
+    return weightTotal;
+  } catch (error) {
+    console.log("unable to calculate");
   }
+  // }
 };
 
 const decrease = (e, id, size_id, color_id) => {
@@ -296,9 +449,12 @@ const decrease = (e, id, size_id, color_id) => {
     );
   });
 
-  const findCartItem = cartItem.find((item) => {
-    return item.id == id && item.size == size_id && item.color == color_id;
-  });
+  let findCartItem;
+  if (cartItem) {
+    findCartItem = cartItem.find((item) => {
+      return item.id == id && item.size == size_id && item.color == color_id;
+    });
+  }
 
   if (existingData) {
     totalSingleItem = Number(qtyInfo.value) * Number(existingData.price);
@@ -319,11 +475,12 @@ const decrease = (e, id, size_id, color_id) => {
 
   localStorage.setItem("detail-cart-item", JSON.stringify(data));
   localStorage.setItem("cart-item", JSON.stringify(cartItem));
+  grandTotal();
 };
 
 const increase = (e, id, size_id, color_id) => {
   const data = JSON.parse(localStorage.getItem("detail-cart-item"));
-  const cartItem = JSON.parse(localStorage.getItem("cart-item"));
+  const cartItem = JSON.parse(localStorage.getItem("cart-item")) || null;
   const thisParentElement = e.parentNode.parentNode.parentNode.parentNode;
   const thisChild = thisParentElement.querySelectorAll("td");
   const localTotal = thisChild[5];
@@ -340,9 +497,12 @@ const increase = (e, id, size_id, color_id) => {
     );
   });
 
-  const findCartItem = cartItem.find((item) => {
-    return item.id == id && item.size == size_id && item.color == color_id;
-  });
+  let findCartItem;
+  if (cartItem) {
+    findCartItem = cartItem.find((item) => {
+      return item.id == id && item.size == size_id && item.color == color_id;
+    });
+  }
 
   if (existingData) {
     totalSingleItem = Number(qtyInfo.value) * Number(existingData.price);
@@ -363,4 +523,24 @@ const increase = (e, id, size_id, color_id) => {
 
   localStorage.setItem("detail-cart-item", JSON.stringify(data));
   localStorage.setItem("cart-item", JSON.stringify(cartItem));
+  grandTotal();
+};
+
+const removeItem = (event) => {
+  const parentItem = event.parentNode.parentNode;
+  const childItems = parentItem.querySelectorAll("td");
+  const cart_id = event.dataset.cart || null
+  const data = JSON.parse(localStorage.getItem("detail-cart-item"));
+  const local_data = JSON.parse(localStorage.getItem("cart-item"));
+  const getData =
+    childItems[4].children[0].children[0].children[0].attributes[2].value
+      .replaceAll(" ", "")
+      .replaceAll("'", "")
+      .replaceAll(")", "")
+      .split(",");
+  console.log(cart_id);
+
+  if (cart_id) {
+    const url = ``
+  }
 };
