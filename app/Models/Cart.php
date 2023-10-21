@@ -11,4 +11,8 @@ class Cart extends Model
 {
 	use HasFactory, Notifiable, HasUuids;
 	protected $guarded = [];
+
+	public function getProduct() {
+		return $this->belongsTo(Product::class, 'product_id', 'id');
+	}
 }

@@ -143,7 +143,6 @@ addToCart.addEventListener("submit", (e) => {
       },
     });
   } else {
-    console.log(data);
     let localData = JSON.parse(localStorage.getItem("cart-item"));
 
     if (localData) {

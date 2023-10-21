@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,6 +51,23 @@ class CartController extends Controller
 				->get();
 
 			return response()->json($cart, 200);
+		}
+	}
+
+	public function ajaxUpdateCart(Request $request)
+	{
+		if (request()->ajax()) {
+			try {
+				$cart = Cart::find($request['id']);
+				$cart->delete();
+				return response()->json([
+					'message' => 'Barang berhasil dihapus dari keranjang'
+				], 200);
+			} catch (Exception $e) {
+				return response()->json([
+					'message' => 'Barang gagal dihapus dari keranjang'
+				], 501);
+			}
 		}
 	}
 }

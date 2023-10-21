@@ -5,6 +5,7 @@ pilihKurir.value = "";
 $(() => {
   pilihKurir.disabled = true;
   try {
+    const tableBody = document.getElementById("detail-cart");
     if (logoutElement === null) {
       let localData = localStorage.getItem("cart-item");
 
@@ -20,7 +21,17 @@ $(() => {
             localData,
           },
           success: (data) => {
-            const tableBody = document.getElementById("detail-cart");
+            if (data.length == 0) {
+              tableBody.innerHTML = `
+                <tr>
+                  <td colspan="7" class="text-center">
+                    Keranjang kosong. <a href="/shop">Mulai berbelanja</a>
+                  </td>
+                </tr>`;
+
+              return;
+            }
+
             let display = "";
             let subtotal = 0;
             data.forEach((item) => {
@@ -82,11 +93,19 @@ $(() => {
             document.getElementById("subtotal").innerHTML = commify(subtotal);
             tableBody.innerHTML = display;
             localStorage.setItem("detail-cart-item", JSON.stringify(data));
+            grandTotal();
           },
           error: (data) => {
             console.log(data);
           },
         });
+      } else {
+        tableBody.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center">
+            Keranjang kosong. <a href="/shop">Mulai berbelanja</a>
+          </td>
+        </tr>`;
       }
     } else {
       showLoadingAnimation();
@@ -98,7 +117,18 @@ $(() => {
         data: { _token: csrf_token },
         success: (data) => {
           hideLoadingAnimation();
-          const tableBody = document.getElementById("detail-cart");
+
+          if (data.length == 0) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="7" class="text-center">
+                  Keranjang kosong. <a href="/shop">Mulai berbelanja</a>
+                </td>
+              </tr>`;
+
+            return;
+          }
+
           let display = "";
           let subtotal = 0;
           let item_to_store = [];
@@ -528,8 +558,9 @@ const increase = (e, id, size_id, color_id) => {
 
 const removeItem = (event) => {
   const parentItem = event.parentNode.parentNode;
+  const tbodyElement = parentItem.parentNode; // .children.length
   const childItems = parentItem.querySelectorAll("td");
-  const cart_id = event.dataset.cart || null
+  const cart_id = event.dataset.cart || null;
   const data = JSON.parse(localStorage.getItem("detail-cart-item"));
   const local_data = JSON.parse(localStorage.getItem("cart-item"));
   const getData =
@@ -538,9 +569,93 @@ const removeItem = (event) => {
       .replaceAll("'", "")
       .replaceAll(")", "")
       .split(",");
-  console.log(cart_id);
+
+  const id = Number(getData[1]);
+  const size_id = Number(getData[2]);
+  const color_id = Number(getData[3]);
+
+  const filteredData = data.filter((item) => {
+    return (
+      item.id != id || item.size_id != size_id || item.color_id != color_id
+    );
+  });
+
+  if (local_data) {
+    const filterLocalData = local_data.filter((item) => {
+      return item.id != id || item.size != size_id || item.color != color_id;
+    });
+
+    localStorage.setItem("cart-item", JSON.stringify(filterLocalData));
+    Toastify({
+      text: data.message || "Barang berhasil dihapus dari keranjang",
+      duration: 2000,
+      close: true,
+      position: "center",
+      className: "danger",
+      style: {
+        background:
+          "linear-gradient(90deg, rgba(12,92,0,1) 0%, rgba(32,193,27,1) 41%, rgba(168,255,125,1) 100%)",
+        borderRadius: "5px",
+      },
+    }).showToast();
+  }
 
   if (cart_id) {
-    const url = ``
+    const url = `ajax-update-user-cart`;
+    const updateData = {
+      _token: $('meta[name="_token"]').attr("content"),
+      _method: "PUT",
+      id: cart_id,
+    };
+
+    $.ajax({
+      url,
+      type: "POST",
+      data: updateData,
+      success: (data) => {
+        parentItem.remove();
+        Toastify({
+          text: data.message || "Barang berhasil dihapus dari keranjang",
+          duration: 2000,
+          close: true,
+          position: "center",
+          className: "danger",
+          style: {
+            background:
+              "linear-gradient(90deg, rgba(12,92,0,1) 0%, rgba(32,193,27,1) 41%, rgba(168,255,125,1) 100%)",
+            borderRadius: "5px",
+          },
+        }).showToast();
+      },
+      error: (data) => {
+        console.log(data);
+        Toastify({
+          text: data.responseJSON.message,
+          duration: 2000,
+          close: true,
+          position: "center",
+          className: "danger",
+          style: {
+            background:
+              "linear-gradient(90deg, rgba(92,0,0,1) 0%, rgba(193,27,27,1) 41%, rgba(255,125,125,1) 100%)",
+            borderRadius: "5px",
+          },
+        }).showToast();
+      },
+    });
   }
+
+  localStorage.setItem("detail-cart-item", JSON.stringify(filteredData));
+
+  parentItem.remove();
+  if (tbodyElement.children.length == 0) {
+    tbodyElement.innerHTML = `
+    <tr>
+      <td colspan="7" class="text-center">
+        Keranjang kosong. <a href="/shop">Mulai berbelanja</a>
+      </td>
+    </tr>
+    `;
+  }
+  grandTotal();
 };
