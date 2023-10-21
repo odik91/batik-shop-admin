@@ -115,7 +115,7 @@
                 </button>
               </div>
               <input type="text" class="form-control bg-secondary text-center" value="1" id="quantity"
-                name="quantity" min="1">
+                name="quantity" min="1" readonly max="10">
               <div class="input-group-btn">
                 <button type="button"class="btn btn-primary btn-plus check-info">
                   <i class="fa fa-plus"></i>

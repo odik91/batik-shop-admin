@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\City;
 use App\Models\Product;
 use App\Models\ProductGallery;
 use App\Models\ProductSize;
 use App\Models\Province;
+use Exception;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -148,9 +150,54 @@ class ShopController extends Controller
     }
   }
 
-  public function addToCart(Request $request) {
+  public function addToCart(Request $request)
+  {
     if (request()->ajax()) {
-      return response()->json($request->all(), 200);
+      try {
+        $this->validate($request, [
+          'id' => 'required',
+          'quantity' => 'required',
+        ]);
+
+        $getCart = Cart::where('user_id', auth()->user()['id'])
+          ->where('product_id', $request['id'])
+          ->where('size_id', $request['size'])
+          ->where('color_id', $request['color'])
+          ->first();
+
+        if ($getCart) {
+          $getCart->quantity += (float) $request['quantity'];
+          $getCart->save();
+
+          $getUserCart = Cart::where('user_id', auth()->user()['id'])->count();
+
+          return response()->json([
+            'message' => 'Produk berhasil ditambahkan ke keranjang',
+            'cart_count' => $getUserCart
+          ], 201);
+        }
+
+        $cart = new Cart([
+          'user_id' => auth()->user()['id'],
+          'product_id' => $request['id'],
+          'size_id' => $request['size'],
+          'color_id' => $request['color'],
+          'quantity' => (float) $request['quantity'],
+        ]);
+        $cart->save();
+
+        $getUserCart = Cart::where('user_id', auth()->user()['id'])->count();
+
+        return response()->json([
+          'message' => 'Produk berhasil ditambahkan ke keranjang',
+          'cart_count' => $getUserCart
+        ], 201);
+      } catch (Exception $e) {
+        return response()->json([
+          'message' => 'Item gagal ditambahkan ke keranjang',
+          'error_log' => $e
+        ], 500);
+      }
     }
   }
 }

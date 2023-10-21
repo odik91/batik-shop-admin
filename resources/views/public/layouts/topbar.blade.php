@@ -57,7 +57,15 @@
       {{-- shop cart --}}
       <a href="{{ route('public.keranjang-belanja') }}" class="btn border">
         <i class="fas fa-shopping-cart text-primary"></i>
-        <span class="badge" id="total-item-in-cart">0</span>
+        <span class="badge" id="total-item-in-cart">
+          @if (Route::has('login'))
+            @auth
+              {{ App\Models\Cart::where('user_id', auth()->user()['id'])->count() }}
+            @else
+              0
+            @endauth
+          @endif
+        </span>
       </a>
     </div>
   </div>

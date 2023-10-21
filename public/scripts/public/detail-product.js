@@ -15,7 +15,7 @@ $(() => {
     price = attr1.value;
     unit = attr2.value;
     weight = attr3.value;
-    is_login = attr4.value || 'no';
+    is_login = attr4.value || "no";
 
     attr.remove();
     attr1.remove();
@@ -53,14 +53,12 @@ addToCart.addEventListener("submit", (e) => {
   const colorElement = document.getElementsByName("color");
 
   const formData = new FormData(addToCart);
-  console.log(formData);
   const data = {
     id: localId,
     size: formData.get("size"),
     color: formData.get("color"),
     quantity: formData.get("quantity"),
   };
-  console.log(data);
 
   if (sizeElement.length > 0) {
     if (!data.size) {
@@ -109,13 +107,41 @@ addToCart.addEventListener("submit", (e) => {
   }
 
   if (is_login === "yes") {
-    const url = `ajax-add-to-cart`;
-    data['_token'] = formData.get('_token')
-    console.log(data);
-    // $.ajax({
-    //   url,
-    //   type: 'POST',
-    // })
+    const url = `/ajax-add-to-cart`;
+    data["_token"] = formData.get("_token");
+    showLoadingAnimation();
+    $.ajax({
+      url,
+      type: "POST",
+      data,
+      success: (data) => {
+        hideLoadingAnimation();
+        document.getElementById('total-item-in-cart').innerHTML = data.cart_count || 0
+        Swal.fire({
+          title: "Berhasil",
+          html: data.message,
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Mengerti",
+          allowOutsideClick: false,
+        });
+      },
+      error: (data) => {
+        hideLoadingAnimation();
+        Swal.fire({
+          title: "Perhatian!",
+          html: data.responseJSON.message,
+          icon: "warning",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Mengerti",
+          allowOutsideClick: false,
+        });
+      },
+    });
   } else {
     console.log(data);
     let localData = JSON.parse(localStorage.getItem("cart-item"));
