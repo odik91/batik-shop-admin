@@ -10,5 +10,5 @@ use Illuminate\Notifications\Notifiable;
 class Order extends Model
 {
 	use HasFactory, Notifiable, HasUuids;
-	protected $fillable = [];
+	protected $guarded = [];
 }

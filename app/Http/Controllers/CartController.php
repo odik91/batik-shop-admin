@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
@@ -74,7 +77,123 @@ class CartController extends Controller
 	public function ajaxCartCheckout(Request $request)
 	{
 		if (request()->ajax()) {
-			return response()->json($request->all(), 201);
+			$this->validate($request, [
+				'total_peritem' => 'required',
+				'id_item' => 'required',
+				'province' => 'required',
+				'kota' => 'required',
+				'courier' => 'required',
+			]);
+
+			$id = Str::uuid();
+
+			# calculate weight
+			$get_cart_items = Cart::whereIn('carts.id', $request['id_item'])
+				->join('products', 'carts.product_id', 'products.id')
+				->select(
+					'carts.product_id',
+					'carts.size_id',
+					'carts.color_id',
+					'products.price',
+					'products.weight_estimation',
+				)
+				->get();
+
+			$total_weight = 0;
+			$total_price = 0;
+			foreach ($get_cart_items as $key => $cart_item) {
+				$total_weight += (float) $request['total_peritem'][$key] * (float) $cart_item['weight_estimation'];
+				$total_price += (float) $request['total_peritem'][$key] * (float) $cart_item['price'];
+			}
+
+			DB::beginTransaction();
+			try {
+				# get ship cost expenses
+				$cost_shipping = 10000;
+				$data = '';
+
+				if ($request['courier'] != 'lokal') {
+					$curl = curl_init();
+					$key = env('RAJA_ONGKIR');
+					$origin = env('DEFAULT_CITY');
+
+					$kota = $request['kota'];
+					$berat = $total_weight < 1 ? 1 : $total_weight;
+					$kurir = $request['courier'];
+
+					curl_setopt_array($curl, array(
+						CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+						CURLOPT_RETURNTRANSFER => true,
+						CURLOPT_ENCODING => "",
+						CURLOPT_MAXREDIRS => 10,
+						CURLOPT_TIMEOUT => 30,
+						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+						CURLOPT_CUSTOMREQUEST => "POST",
+						CURLOPT_POSTFIELDS => "origin=$origin&destination=$kota&weight=$berat&courier=$kurir",
+						CURLOPT_HTTPHEADER => array(
+							"content-type: application/x-www-form-urlencoded",
+							"key: $key"
+						),
+					));
+
+					$response = curl_exec($curl);
+					$err = curl_error($curl);
+					$data = json_decode($response);
+
+					$cost_services = $data->rajaongkir->results[0]->costs;
+
+					foreach ($cost_services as $cost_service) {
+						if ($cost_service->service == $request['service_choice']) {
+							$cost_shipping = (float) $cost_service->cost[0]->value;
+						}
+					}
+				}
+
+				# insert data into table order
+				$order = new Order([
+					'id' => strtoupper($id),
+					'user_id' => auth()->user()['id'],
+					'status' => 'ordered',
+					'province_id' => $request['province'],
+					'city_id' => $request['kota'],
+					'courier' => $request['courier'],
+					'service' => $request['service_choice'],
+					'shipping_expenses' => $cost_shipping,
+					'wight' => $total_weight,
+					'total' => $total_price,
+				]);
+				$order->save();
+
+
+				foreach ($request['id_item'] as $key => $id_item) {
+					$size_id = $get_cart_items[$key]['size_id'] ? (int) $get_cart_items[$key]['size_id'] : null;
+					$color_id = $get_cart_items[$key]['color_id'] ? (int) $get_cart_items[$key]['color_id'] : null;
+					$order_detail = new OrderDetail([
+						'order_id' => strtoupper($id),
+						'product_id' => (int) $get_cart_items[$key]['product_id'],
+						'color_id' => $size_id,
+						'size_id' => $color_id,
+						'total_item' => (float) $request['total_peritem'][$key],
+						'price' => (float) $get_cart_items[$key]['price'],
+						'discount' => 0,
+						'total' => (float) $request['total_peritem'][$key] * (float) $get_cart_items[$key]['price'],
+					]);
+					$order_detail->save();
+					Cart::where('id', $id_item)->delete();
+				}
+
+				DB::commit();
+
+				return response()->json([
+					'message' => 'Pesanan berhasil dibuat'
+				], 200);
+			} catch (Exception $e) {
+				DB::rollBack();
+				return response()->json([
+					'message' => 'Pemesanan barang gagal dilakukan',
+					'error_log' => $e->getMessage(),
+				], 422);
+			}
 		}
 	}
 }

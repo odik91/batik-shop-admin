@@ -2,11 +2,18 @@ const logoutElement = document.getElementById("logout-form");
 const pilihKurir = document.getElementById("kurir");
 pilihKurir.value = "";
 const defaultShippingCost = 10000;
+const tableBody = document.getElementById("detail-cart");
 
 $(() => {
   pilihKurir.disabled = true;
   try {
-    const tableBody = document.getElementById("detail-cart");
+    tableBody.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center">
+            Keranjang kosong. <a href="/shop">Mulai berbelanja</a>
+          </td>
+        </tr>`;
+
     if (logoutElement === null) {
       let localData = localStorage.getItem("cart-item");
 
@@ -385,7 +392,8 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
   const data = {
     kota: getKota.value,
     kurir: pilihKurir.value,
-    berat: Number(totalWeight) < 1 ? 1 : Number(totalWeight),
+    // berat: Number(totalWeight) < 1 ? 1 : Number(totalWeight),
+    berat: 1,
   };
 
   if (data.kota == "" || data.kurir == "") {
@@ -681,7 +689,6 @@ form_checkout.addEventListener("submit", (e) => {
 
   let id_cart = [];
   list_id.forEach((item) => {
-    console.log(item.dataset.cart);
     id_cart = [...id_cart, item.dataset.cart];
   });
 
@@ -689,7 +696,7 @@ form_checkout.addEventListener("submit", (e) => {
   const serviceSelected = document.querySelectorAll('input[name="service"]');
   serviceSelected.forEach((item) => {
     if (item.checked) {
-      getService = item.attributes.id.value.split('-')[1]
+      getService = item.attributes.id.value.split("-")[1];
     }
   });
 
@@ -707,7 +714,7 @@ form_checkout.addEventListener("submit", (e) => {
         window.location.replace("/shop");
       }
     });
-    return
+    return;
   }
 
   const data = {
@@ -718,7 +725,7 @@ form_checkout.addEventListener("submit", (e) => {
     kota: form_data.get("kota"),
     courier: form_data.get("kurir"),
     service: form_data.get("service"),
-    service_choice: getService
+    service_choice: getService,
   };
 
   if (data.total_peritem == 0) {
@@ -730,10 +737,10 @@ form_checkout.addEventListener("submit", (e) => {
       cancelButtonText: "Batal",
       allowOutsideClick: false,
     });
-    return
+    return;
   }
 
-  if (data.courier != 'lokal' && data.service_choice == '') {
+  if (data.courier != "lokal" && data.service_choice == "") {
     Swal.fire({
       title: "Perhatian!",
       text: "Mohon pilih layanan pengiriman terlebih dahulu",
@@ -742,7 +749,7 @@ form_checkout.addEventListener("submit", (e) => {
       cancelButtonText: "Batal",
       allowOutsideClick: false,
     });
-    return
+    return;
   }
 
   Swal.fire({
@@ -763,11 +770,39 @@ form_checkout.addEventListener("submit", (e) => {
         data,
         success: (data) => {
           hideLoadingAnimation();
-          console.log(data);
+          tableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center">
+              Keranjang kosong. <a href="/shop">Mulai berbelanja</a>
+            </td>
+          </tr>`;
+          $("#form-checkout")[0].reset();
+          document.getElementById("list-layanan").innerHTML = "";
+          document.getElementById("subtotal").innerHTML = "0";
+          $("#provinsi").val("").trigger("change");
+          $("#kota").val("").trigger("change");
+          document.getElementById("kota").disabled = true;
+          document.getElementById("kurir").disabled = true;
+          document.getElementById("total-item-in-cart").innerHTML = 0;
+          Swal.fire({
+            title: "Berhasil!",
+            text: data.message,
+            icon: "success",
+            confirmButtonText: "Mengerti",
+            cancelButtonText: "Batal",
+            allowOutsideClick: false,
+          });
         },
         error: (data) => {
           hideLoadingAnimation();
-          console.log(data);
+          Swal.fire({
+            title: "Gagal!",
+            html: data.responseJSON.message,
+            icon: "danger",
+            confirmButtonText: "Mengerti",
+            cancelButtonText: "Batal",
+            allowOutsideClick: false,
+          });
         },
       });
     }

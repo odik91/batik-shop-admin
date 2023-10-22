@@ -98,6 +98,9 @@
                 </select>
               </div>
               <hr>
+              <div class="mb-2">
+                <small><i class="text-info">Biaya expedisi yang tertera adalah perkiraan biaya per kilogram. <br>Untuk kurir lokal biaya tarif berdasar ketentuan penyedia layanan</i></small>
+              </div>
               <div class="form-group row">
                 <label for="kurir" class="col-sm-4 col-form-label">Kurir</label>
                 <div class="col-sm-8">
@@ -126,22 +129,23 @@
                 <h6 class="font-weight-medium">Subtotal</h6>
                 <h6 class="font-weight-medium">Rp<span id="subtotal"></span></h6>
               </div>
-              <div class="d-flex justify-content-between">
-                <h6 class="font-weight-medium">Shipping</h6>
-                <h6 class="font-weight-medium">Rp<span id="shipping"></span></h6>
+              <div class="d-flex justify-content-between d-none">
+                <h6 class="font-weight-medium d-none">Shipping</h6>
+                <h6 class="font-weight-medium d-none">Rp<span id="shipping"></span></h6>
               </div>
             </div>
             <div class="card-footer border-secondary bg-transparent">
-              <div class="d-flex justify-content-between mt-2">
-                <h5 class="font-weight-bold">Total</h5>
-                <h5 class="font-weight-bold">Rp<span id="grand-total"></span></h5>
+              <div class="d-flex justify-content-between mt-2  d-none">
+                <h5 class="font-weight-bold d-none">Total</h5>
+                <h5 class="font-weight-bold d-none">Rp<span id="grand-total"></span></h5>
               </div>
               {{-- <button class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke Pemesanan</button> --}}
               @if (Route::has('login'))
                 @auth
                   <div class="form-group">
                     <label for="alamat-pengiriman" class="text-capitalize">alamat pengiriman</label>
-                    <textarea name="alamat-pengiriman" id="alamat-pengiriman" cols="30" rows="10" class="form-control" required placeholder="Alamat pengiriman" required></textarea>
+                    <textarea name="alamat-pengiriman" id="alamat-pengiriman" cols="30" rows="10" class="form-control" required
+                      placeholder="Alamat pengiriman" required></textarea>
                   </div>
                   <button type="submit" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
                     Pemesanan</button>

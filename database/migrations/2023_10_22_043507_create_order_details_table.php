@@ -32,16 +32,6 @@ return new class extends Migration
 				->references('id')
 				->on('products')
 				->onDelete('cascade');
-
-			$table->foreign('color_id')
-				->references('id')
-				->on('colors')
-				->onDelete('set null');
-
-			$table->foreign('size_id')
-				->references('id')
-				->on('sizes')
-				->onDelete('set null');
 		});
 	}
 
