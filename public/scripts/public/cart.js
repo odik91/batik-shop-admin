@@ -1,6 +1,7 @@
 const logoutElement = document.getElementById("logout-form");
 const pilihKurir = document.getElementById("kurir");
 pilihKurir.value = "";
+const defaultShippingCost = 10000;
 
 $(() => {
   pilihKurir.disabled = true;
@@ -298,6 +299,7 @@ $(() => {
           },
         });
         grandTotal();
+        document.getElementById("list-layanan").innerHTML = "";
       });
 
     $("#kota")
@@ -311,6 +313,7 @@ $(() => {
         document.getElementById("kurir").disabled = false;
         pilihKurir.disabled = false;
         grandTotal();
+        document.getElementById("list-layanan").innerHTML = "";
       });
   } catch (error) {
     console.log("fail to fetch raja ongkir");
@@ -332,6 +335,9 @@ pilihKurir.addEventListener("input", (e) => {
       allowOutsideClick: false,
     });
   }
+
+  document.getElementById("list-layanan").innerHTML = "";
+  grandTotal();
 });
 
 // fungsi kalkulasi total
@@ -351,6 +357,9 @@ const grandTotal = () => {
       }
     });
 
+    if (document.getElementById("kurir").value == "lokal") {
+      shippingExpenses = defaultShippingCost;
+    }
     data.forEach((item) => {
       subtotal += Number(item.total);
     });
@@ -376,7 +385,7 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
   const data = {
     kota: getKota.value,
     kurir: pilihKurir.value,
-    berat: totalWeight,
+    berat: Number(totalWeight) < 1 ? 1 : Number(totalWeight),
   };
 
   if (data.kota == "" || data.kurir == "") {
@@ -393,6 +402,11 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
     return;
   }
 
+  if (data.kurir == "lokal") {
+    grandTotal();
+    return;
+  }
+
   showLoadingAnimation();
   $.ajax({
     url,
@@ -401,8 +415,8 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
     processData: true,
     dataType: false,
     success: (data) => {
-      const results = data.rajaongkir.results[0];
-      console.log(results);
+      hideLoadingAnimation();
+      const results = data?.rajaongkir?.results[0];
       const { code, costs, name } = results;
       let display = ``;
       costs.forEach((item) => {
@@ -435,7 +449,6 @@ document.getElementById("check-layanan-kurir").addEventListener("click", () => {
         });
       });
       grandTotal();
-      hideLoadingAnimation();
     },
     error: (data) => {
       console.log(data);
@@ -659,3 +672,104 @@ const removeItem = (event) => {
   }
   grandTotal();
 };
+
+const form_checkout = document.getElementById("form-checkout");
+form_checkout.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const list_id = document.querySelectorAll(".remove-item");
+  const form_data = new FormData(form_checkout);
+
+  let id_cart = [];
+  list_id.forEach((item) => {
+    console.log(item.dataset.cart);
+    id_cart = [...id_cart, item.dataset.cart];
+  });
+
+  let getService = "";
+  const serviceSelected = document.querySelectorAll('input[name="service"]');
+  serviceSelected.forEach((item) => {
+    if (item.checked) {
+      getService = item.attributes.id.value.split('-')[1]
+    }
+  });
+
+  if (id_cart.length == 0) {
+    Swal.fire({
+      title: "Perhatian!",
+      text: "Maaf keranjang anda kosong",
+      icon: "warning",
+      confirmButtonText: "Lanjutkan berbelanja",
+      showCancelButton: true,
+      cancelButtonText: "Batal",
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.replace("/shop");
+      }
+    });
+    return
+  }
+
+  const data = {
+    _token: form_data.get("_token"),
+    total_peritem: form_data.getAll("total-peritem[]"),
+    id_item: id_cart,
+    province: form_data.get("provinsi"),
+    kota: form_data.get("kota"),
+    courier: form_data.get("kurir"),
+    service: form_data.get("service"),
+    service_choice: getService
+  };
+
+  if (data.total_peritem == 0) {
+    Swal.fire({
+      title: "Perhatian!",
+      text: "Mohon lengkapi kuantitas barang pesanan anda",
+      icon: "warning",
+      confirmButtonText: "Mengerti",
+      cancelButtonText: "Batal",
+      allowOutsideClick: false,
+    });
+    return
+  }
+
+  if (data.courier != 'lokal' && data.service_choice == '') {
+    Swal.fire({
+      title: "Perhatian!",
+      text: "Mohon pilih layanan pengiriman terlebih dahulu",
+      icon: "warning",
+      confirmButtonText: "Mengerti",
+      cancelButtonText: "Batal",
+      allowOutsideClick: false,
+    });
+    return
+  }
+
+  Swal.fire({
+    title: "Perhatian!",
+    text: "Patikan anda telah memasukkan informasi dengan benar",
+    icon: "warning",
+    confirmButtonText: "Lanjutkan ke pemesanan",
+    showCancelButton: true,
+    cancelButtonText: "Batal",
+    allowOutsideClick: false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      showLoadingAnimation();
+      const url = `ajax-cart-checkout`;
+      $.ajax({
+        url,
+        type: "POST",
+        data,
+        success: (data) => {
+          hideLoadingAnimation();
+          console.log(data);
+        },
+        error: (data) => {
+          hideLoadingAnimation();
+          console.log(data);
+        },
+      });
+    }
+  });
+});

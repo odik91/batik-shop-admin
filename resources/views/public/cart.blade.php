@@ -32,7 +32,7 @@
   <!-- Page Header End -->
   <!-- Cart Start -->
   <div class="container-fluid pt-5">
-    <form action="" id="form-checkout" method="POST">
+    <form action="#" id="form-checkout" method="POST">
       @csrf
       <div class="row px-xl-5">
         <div class="col-lg-8 table-responsive mb-5">
@@ -87,13 +87,13 @@
               <hr>
               <div class="form-group">
                 <label for="provinsi">Provinsi</label>
-                <select name="provinsi" id="provinsi" class="form-control">
+                <select name="provinsi" id="provinsi" class="form-control" required>
                   <option value="" selected disabled>Pilih provinsi</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="kota">Kabupaten Kota</label>
-                <select name="kota" id="kota" class="form-control" disabled>
+                <select name="kota" id="kota" class="form-control" disabled required>
                   <option value="" selected disabled>Pilih kabupaten kota</option>
                 </select>
               </div>
@@ -101,7 +101,7 @@
               <div class="form-group row">
                 <label for="kurir" class="col-sm-4 col-form-label">Kurir</label>
                 <div class="col-sm-8">
-                  <select class="form-control" name="kurir" id="kurir" disabled>
+                  <select class="form-control" name="kurir" id="kurir" disabled required>
                     <option value="" selected disabled>Pilih kurir</option>
                     <option value="lokal">Kurir lokal</option>
                     <option value="jne">JNE</option>
@@ -113,7 +113,7 @@
               <div class="form-group row px-3">
                 <button type="button" id="check-layanan-kurir" class="btn btn-block btn-sm btn-info">Cek Layanan</button>
               </div>
-              <div class="row" id="list-layanan">                
+              <div class="row" id="list-layanan">
               </div>
             </div>
           </div>
@@ -139,10 +139,12 @@
               {{-- <button class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke Pemesanan</button> --}}
               @if (Route::has('login'))
                 @auth
-                  {{-- <a href="{{ route('public.checkout') }}" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
-                    Pemesanan</a> --}}
-                    <button type="submit" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
-                      Pemesanan</button>
+                  <div class="form-group">
+                    <label for="alamat-pengiriman" class="text-capitalize">alamat pengiriman</label>
+                    <textarea name="alamat-pengiriman" id="alamat-pengiriman" cols="30" rows="10" class="form-control" required placeholder="Alamat pengiriman" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-block btn-primary my-3 py-3">Lajutkan Ke
+                    Pemesanan</button>
                 @else
                   <a href="{{ route('login') }}"
                     class="btn btn-block btn-primary my-3 py-3 text-capitalize text-light">Login untuk memesan</a>

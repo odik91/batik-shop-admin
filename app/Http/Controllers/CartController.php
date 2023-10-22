@@ -70,4 +70,11 @@ class CartController extends Controller
 			}
 		}
 	}
+
+	public function ajaxCartCheckout(Request $request)
+	{
+		if (request()->ajax()) {
+			return response()->json($request->all(), 201);
+		}
+	}
 }

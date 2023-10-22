@@ -53,6 +53,7 @@ Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.p
 Route::group(['middleware' => 'auth'], function () {
 	Route::post('/ajax-get-user-cart', [CartController::class, 'ajaxGetCartUser'])->name('cart.ajax-get-user-cart');
 	Route::match(['PUT', 'PATCH'], '/ajax-update-user-cart', [CartController::class, 'ajaxUpdateCart'])->name('cart.ajax-update-user-cart');
+	Route::post('/ajax-cart-checkout', [CartController::class, 'ajaxCartCheckout'])->name('cart.ajax-cart-checkout');
 });
 
 # route admin

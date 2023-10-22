@@ -102,7 +102,7 @@
                 </div>
               @endforeach
             @else
-              <span class="text-capitalize text-info">pilihan ukuran tidak tersedia</span>
+              <span class="text-capitalize text-info">pilihan warna tidak tersedia</span>
             @endif
           </div>
           {{-- end warna --}}
