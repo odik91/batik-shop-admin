@@ -14,6 +14,7 @@ return new class extends Migration
 		Schema::create('orders', function (Blueprint $table) {
 			$table->uuid('id')->primary();
 			$table->unsignedBigInteger('user_id');
+			$table->string('invoice');
 			$table->enum('status', ['ordered', 'waiting payment', 'paid', 'process', 'deliver', 'recieved', 'completed', 'complaint', 'refound', 'closed', 'rejected', 'canceled']);
 			$table->longText('description')->nullable();
 			$table->unsignedBigInteger('province_id')->nullable();

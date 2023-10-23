@@ -150,8 +150,10 @@ class CartController extends Controller
 				}
 
 				# insert data into table order
+				$invoice =Order::generateInvoice('no-iv/batik/');
 				$order = new Order([
 					'id' => strtoupper($id),
+					'invoice' => $invoice,
 					'user_id' => auth()->user()['id'],
 					'status' => 'ordered',
 					'province_id' => $request['province'],

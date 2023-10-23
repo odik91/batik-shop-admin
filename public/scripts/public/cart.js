@@ -798,7 +798,7 @@ form_checkout.addEventListener("submit", (e) => {
           Swal.fire({
             title: "Gagal!",
             html: data.responseJSON.message,
-            icon: "danger",
+            icon: "error",
             confirmButtonText: "Mengerti",
             cancelButtonText: "Batal",
             allowOutsideClick: false,

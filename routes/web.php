@@ -46,14 +46,15 @@ Route::get('/wishlists', [ShopController::class, 'wishlists'])->name('public.wis
 # route contact
 Route::get('/contact-us', [ContactController::class, 'index'])->name('public.contact-us');
 
-# route profile
-Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');
 
 // route cart for user is login
 Route::group(['middleware' => 'auth'], function () {
 	Route::post('/ajax-get-user-cart', [CartController::class, 'ajaxGetCartUser'])->name('cart.ajax-get-user-cart');
 	Route::match(['PUT', 'PATCH'], '/ajax-update-user-cart', [CartController::class, 'ajaxUpdateCart'])->name('cart.ajax-update-user-cart');
 	Route::post('/ajax-cart-checkout', [CartController::class, 'ajaxCartCheckout'])->name('cart.ajax-cart-checkout');
+	
+	# route profile
+	Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');
 });
 
 # route admin
