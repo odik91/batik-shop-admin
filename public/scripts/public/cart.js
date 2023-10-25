@@ -726,6 +726,7 @@ form_checkout.addEventListener("submit", (e) => {
     courier: form_data.get("kurir"),
     service: form_data.get("service"),
     service_choice: getService,
+    alamat: form_data.get('alamat-pengiriman'),
   };
 
   if (data.total_peritem == 0) {

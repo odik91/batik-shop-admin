@@ -35,4 +35,11 @@ class Order extends Model
 		return $no_ref;
 	}
 
+	public function getProvince() {
+		return $this->belongsTo(Province::class, 'province_id', 'id');
+	}
+
+	public function getCity() {
+		return $this->belongsTo(City::class, 'city_id', 'id');
+	}
 }

@@ -150,12 +150,13 @@ class CartController extends Controller
 				}
 
 				# insert data into table order
-				$invoice =Order::generateInvoice('no-iv/batik/');
+				$invoice = Order::generateInvoice('no-iv/batik/');
 				$order = new Order([
 					'id' => strtoupper($id),
 					'invoice' => $invoice,
 					'user_id' => auth()->user()['id'],
 					'status' => 'ordered',
+					'address' => $request['alamat'],
 					'province_id' => $request['province'],
 					'city_id' => $request['kota'],
 					'courier' => $request['courier'],
@@ -166,15 +167,14 @@ class CartController extends Controller
 				]);
 				$order->save();
 
-
 				foreach ($request['id_item'] as $key => $id_item) {
 					$size_id = $get_cart_items[$key]['size_id'] ? (int) $get_cart_items[$key]['size_id'] : null;
 					$color_id = $get_cart_items[$key]['color_id'] ? (int) $get_cart_items[$key]['color_id'] : null;
 					$order_detail = new OrderDetail([
 						'order_id' => strtoupper($id),
 						'product_id' => (int) $get_cart_items[$key]['product_id'],
-						'color_id' => $size_id,
-						'size_id' => $color_id,
+						'size_id' => $size_id,
+						'color_id' => $color_id,
 						'total_item' => (float) $request['total_peritem'][$key],
 						'price' => (float) $get_cart_items[$key]['price'],
 						'discount' => 0,

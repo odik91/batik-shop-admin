@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	# route profile
 	Route::get('/profile', [PublicUserController::class, 'profile'])->name('public.profile');
+	Route::post('/profile-ajax-get-detail-order', [PublicUserController::class, 'ajaxGetDetailOrder'])->name('public.profile-ajax-get-detail-order');
 });
 
 # route admin

@@ -18,7 +18,8 @@
       <div class="col">
         <div class="nav nav-tabs justify-content-center border-secondary mb-4">
           <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Pesanan Saya</a>
-          <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Menunggu Pembayaran <span class="badge badge-info">1</span></a>
+          <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Menunggu Pembayaran <span
+              class="badge badge-info">1</span></a>
           <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Profil</a>
         </div>
         <div class="tab-content">
@@ -31,3 +32,7 @@
   </div>
   <!-- Cart End -->
 @endsection
+
+@push('js')
+  <script src="{{ asset('scripts/public/profile.js') }}"></script>
+@endpush

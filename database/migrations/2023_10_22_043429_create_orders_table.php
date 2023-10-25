@@ -17,6 +17,7 @@ return new class extends Migration
 			$table->string('invoice');
 			$table->enum('status', ['ordered', 'waiting payment', 'paid', 'process', 'deliver', 'recieved', 'completed', 'complaint', 'refound', 'closed', 'rejected', 'canceled']);
 			$table->longText('description')->nullable();
+			$table->longText('address')->nullable();
 			$table->unsignedBigInteger('province_id')->nullable();
 			$table->unsignedBigInteger('city_id')->nullable();
 			$table->string('courier');
