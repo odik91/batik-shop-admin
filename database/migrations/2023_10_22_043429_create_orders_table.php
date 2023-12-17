@@ -26,6 +26,7 @@ return new class extends Migration
 			$table->float('wight')->nullable();
 			$table->float('total')->nullable();
 			$table->enum('payment_term', ['pickup', 'cod', 'transfer'])->nullable();
+			$table->float('uniqe_code')->nullable();
 			$table->string('file')->nullable();
 			$table->enum('payment_approvement', ['approve', 'reject'])->nullable();
 			$table->timestamps();

@@ -1,3 +1,4 @@
+let product_id;
 const get_detail_orders = document.querySelectorAll(".check-order");
 get_detail_orders.forEach((element) => {
   element.addEventListener("click", (e) => {
@@ -63,6 +64,8 @@ get_detail_orders.forEach((element) => {
         );
         document.getElementById("courier").innerHTML = order["courier"];
         document.getElementById("courier-service").innerHTML = order["service"];
+
+        product_id = order["id"];
       },
       error: (data) => {
         hideLoadingAnimation();
@@ -76,7 +79,55 @@ const payment_method = document.getElementById("payment-method");
 payment_method.addEventListener("click", () => {
   const data = {
     _token: $('meta[name="_token"]').attr("content"),
-    order_id: document.getElementById("select-payment-method").value,
+    product_id,
+    payment: document.getElementById("select-payment-method").value,
+    description: document.getElementById("catatan").value,
   };
-  console.log(data);
+
+  if (data.order_id === "") {
+    Swal.fire({
+      title: "Perhatian!",
+      text: "Mohon pilih salah satu metode pembayaran",
+      icon: "warning",
+      confirmButtonText: "Mengerti",
+      cancelButtonText: "Batal",
+      allowOutsideClick: false,
+    });
+    return;
+  }
+
+  const url = `profile-ajax-payment-method`;
+  showLoadingAnimation();
+  $.ajax({
+    url,
+    type: "POST",
+    data,
+    success: (data) => {
+      hideLoadingAnimation();
+      product_id = "";
+      document.getElementById("select-payment-method").value = "";
+      document.getElementById("catatan").value = "";
+      Swal.fire({
+        title: "Perhatian!",
+        text: data.message,
+        icon: "success",
+        confirmButtonText: "Mengerti",
+        showCancelButton: true,
+        cancelButtonText: "Batal",
+        allowOutsideClick: false,
+      });
+      setInterval(location.reload(), 2000);
+    },
+    error: (data) => {
+      hideLoadingAnimation();
+      Swal.fire({
+        title: "Gagal!",
+        html: data.responseJSON.message,
+        icon: "error",
+        confirmButtonText: "Mengerti",
+        cancelButtonText: "Batal",
+        allowOutsideClick: false,
+      });
+    },
+  });
 });

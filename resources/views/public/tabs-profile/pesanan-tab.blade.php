@@ -1,6 +1,7 @@
 <div class="tab-pane fade show active" id="tab-pane-1">
   <h4 class="mb-3">List Pesanan</h4>
   @foreach ($orders as $order)
+    @if ($order['status'] != 'waiting payment')
     <div class="card w-100">
       <div class="card-body">
         <div class="mb-1">
@@ -99,12 +100,15 @@
         </button>
       </div>
     </div>
+    @else
+      <h6>Tidak ada list pesanan</h6>
+    @endif
   @endforeach
 
   <!-- Modal -->
   <div class="modal fade" id="modalDetailPesanan" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Detail Pesanan</h5>
@@ -162,6 +166,14 @@
                     <h5 class="font-weight-bold">Total</h5>
                     <h5 class="font-weight-bold">Rp<span id="grand-total"></span></h5>
                   </div>
+                </div>
+              </div>
+              <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                  <h6 class="font-weight-semi-bold m-0">Catatan</h6>
+                </div>
+                <div class="card-body">
+                  <textarea class="form-control" name="catatan" id="catatan" cols="3" rows="3" placeholder="Catatan ke pihak penjual"></textarea>
                 </div>
               </div>
               <div class="card border-secondary mb-5">
