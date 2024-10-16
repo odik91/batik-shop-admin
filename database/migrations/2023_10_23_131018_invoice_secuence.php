@@ -14,7 +14,7 @@ return new class extends Migration
     if (!Schema::hasTable('invoice_sequence')) {
       Schema::create('invoice_sequence', function (Blueprint $table) {
         $table->id();
-        $table->int('no');
+        $table->integer('no');
       });
     }
   }
